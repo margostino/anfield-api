@@ -4,6 +4,7 @@ go 1.21.5
 
 require (
 	github.com/99designs/gqlgen v0.17.43
+	github.com/margostino/owid-api v0.0.0-20220705201043-2887456399a4
 	github.com/vektah/gqlparser/v2 v2.5.11
 	golang.org/x/text v0.14.0
 	gopkg.in/yaml.v3 v3.0.1
