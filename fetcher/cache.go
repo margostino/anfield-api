@@ -2,10 +2,11 @@ package fetcher
 
 import (
 	"fmt"
-	"github.com/margostino/owid-api/common"
 	"io"
 	"net/http"
 	"os"
+
+	"github.com/margostino/anfield-api/common"
 )
 
 var datasetCache = make(map[string]DatasetIndex)

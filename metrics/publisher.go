@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"github.com/margostino/owid-api/common"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/margostino/anfield-api/common"
 )
 
 var baseUrl = os.Getenv("GA_MP_URL")

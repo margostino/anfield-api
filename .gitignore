@@ -1,2 +1,9 @@
 .vercel
 .env
+
+
+.idea/
+*.iml
+.DS_Store
+.env
+configuration.yml

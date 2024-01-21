@@ -3,13 +3,14 @@ package tooling
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/margostino/owid-api/common"
-	"github.com/margostino/owid-api/configuration"
-	"github.com/margostino/owid-api/utils"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/margostino/anfield-api/common"
+	"github.com/margostino/anfield-api/configuration"
+	"github.com/margostino/anfield-api/utils"
 )
 
 const COMMENT_BLOCK_BEGIN = "\"\"\""

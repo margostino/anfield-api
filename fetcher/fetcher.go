@@ -4,12 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/margostino/owid-api/common"
-	"github.com/margostino/owid-api/metrics"
-	"github.com/margostino/owid-api/utils"
 	"log"
 	"strconv"
 	"strings"
+
+	"github.com/margostino/anfield-api/common"
+	"github.com/margostino/anfield-api/metrics"
+	"github.com/margostino/anfield-api/utils"
 )
 
 func Fetch(ctx context.Context, entity string, year int, response any) (map[string]*float64, error) {

@@ -6,8 +6,8 @@ package graph
 import (
 	"context"
 
-	"github.com/margostino/owid-api/graph/generated"
-	"github.com/margostino/owid-api/graph/model"
+	"github.com/margostino/anfield-api/graph/generated"
+	"github.com/margostino/anfield-api/graph/model"
 )
 
 func (r *queryResolver) O20thCenturyDeathsInUsCdc(ctx context.Context, entity string, year int) (*model.O20thCenturyDeathsInUsCdcDataset, error) {

@@ -1,6 +1,6 @@
 package configuration
 
-import "github.com/margostino/owid-api/common"
+import "github.com/margostino/anfield-api/common"
 
 type Configuration struct {
 	MetadataPath      string `yaml:"metadata_path"`
