@@ -5,16 +5,6 @@
     "functions": {
         "api/hello.go": {
             "maxDuration": 5
-        },
-        "api/query.go": {
-            "memory": 1024,
-            "maxDuration": 5,
-            "includeFiles": "_files/**"
-        },
-        "api/playground.go": {
-            "memory": 1024,
-            "maxDuration": 5,
-            "includeFiles": "_files/**"
         }
     }
 }
