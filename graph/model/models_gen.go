@@ -16,7 +16,13 @@ type Query struct {
 }
 
 type Team struct {
-	ID        string `json:"id"`
-	Name      string `json:"name"`
-	ShortName string `json:"shortName"`
+	ID                  string `json:"id"`
+	Name                string `json:"name"`
+	ShortName           string `json:"shortName"`
+	StrengthOverallHome int    `json:"strengthOverallHome"`
+	StrengthOverallAway int    `json:"strengthOverallAway"`
+	StrengthAttackHome  int    `json:"strengthAttackHome"`
+	StrengthAttackAway  int    `json:"strengthAttackAway"`
+	StrengthDefenceHome int    `json:"strengthDefenceHome"`
+	StrengthDefenceAway int    `json:"strengthDefenceAway"`
 }

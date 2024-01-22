@@ -8,9 +8,15 @@ type Response struct {
 }
 
 type Team struct {
-	Code      int    `json:"code"`
-	Name      string `json:"name"`
-	ShortName string `json:"short_name"`
+	Code                int    `json:"code"`
+	Name                string `json:"name"`
+	ShortName           string `json:"short_name"`
+	StrengthOverallHome int    `json:"strength_overall_home"`
+	StrengthOverallAway int    `json:"strength_overall_away"`
+	StrengthAttackHome  int    `json:"strength_attack_home"`
+	StrengthAttackAway  int    `json:"strength_attack_away"`
+	StrengthDefenceHome int    `json:"strength_defence_home"`
+	StrengthDefenceAway int    `json:"strength_defence_away"`
 }
 
 type Player struct {

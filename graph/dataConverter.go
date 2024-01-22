@@ -7,9 +7,15 @@ import (
 
 func toTeamGraph(team *db.Team) *model.Team {
 	return &model.Team{
-		ID:        team.ID,
-		Name:      team.Name,
-		ShortName: team.ShortName,
+		ID:                  team.ID,
+		Name:                team.Name,
+		ShortName:           team.ShortName,
+		StrengthOverallHome: team.StrengthOverallHome,
+		StrengthOverallAway: team.StrengthOverallAway,
+		StrengthAttackHome:  team.StrengthAttackHome,
+		StrengthAttackAway:  team.StrengthAttackAway,
+		StrengthDefenceHome: team.StrengthDefenceHome,
+		StrengthDefenceAway: team.StrengthDefenceAway,
 	}
 }
 

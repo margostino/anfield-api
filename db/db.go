@@ -24,9 +24,15 @@ type Player struct {
 }
 
 type Team struct {
-	ID        string `json:"id"`
-	Name      string `json:"name"`
-	ShortName string `json:"shortName"`
+	ID                  string `json:"id"`
+	Name                string `json:"name"`
+	ShortName           string `json:"shortName"`
+	StrengthOverallHome int    `json:"strengthOverallHome"`
+	StrengthOverallAway int    `json:"strengthOverallAway"`
+	StrengthAttackHome  int    `json:"strengthAttackHome"`
+	StrengthAttackAway  int    `json:"strengthAttackAway"`
+	StrengthDefenceHome int    `json:"strengthDefenceHome"`
+	StrengthDefenceAway int    `json:"strengthDefenceAway"`
 }
 
 type Playerx struct {
@@ -150,9 +156,15 @@ func load() (*Cache, *TeamIdx) {
 	for _, team := range fplResponse.Teams {
 		key := strings.ToLower(team.ShortName)
 		teamElement := &Team{
-			ID:        strconv.Itoa(team.Code),
-			Name:      team.Name,
-			ShortName: team.ShortName,
+			ID:                  strconv.Itoa(team.Code),
+			Name:                team.Name,
+			ShortName:           team.ShortName,
+			StrengthOverallHome: team.StrengthOverallHome,
+			StrengthOverallAway: team.StrengthOverallAway,
+			StrengthAttackHome:  team.StrengthAttackHome,
+			StrengthAttackAway:  team.StrengthAttackAway,
+			StrengthDefenceHome: team.StrengthDefenceHome,
+			StrengthDefenceAway: team.StrengthDefenceAway,
 		}
 		teams[key] = teamElement
 		teamIndex[strconv.Itoa(team.Code)] = teamElement

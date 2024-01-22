@@ -2,6 +2,12 @@ type Team {
   id: ID!
   name: String!
   shortName: String!
+	strengthOverallHome: Int!,
+  strengthOverallAway: Int!,
+  strengthAttackHome: Int!,
+  strengthAttackAway: Int!,
+  strengthDefenceHome: Int!,
+  strengthDefenceAway: Int!,
 }
 
 type Player {
