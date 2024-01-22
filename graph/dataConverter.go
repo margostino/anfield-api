@@ -16,7 +16,6 @@ func toTeamGraph(team *db.Team) *model.Team {
 func toPlayerGraph(player *db.Player) *model.Player {
 	return &model.Player{
 		ID:         player.ID,
-		TeamID:     player.TeamID,
 		FirstName:  player.FirstName,
 		SecondName: player.SecondName,
 		WebName:    player.WebName,

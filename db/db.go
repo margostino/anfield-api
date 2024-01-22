@@ -15,7 +15,6 @@ import (
 
 type Player struct {
 	ID         string `json:"id"`
-	TeamID     string `json:"teamId"`
 	FirstName  string `json:"firstName"`
 	SecondName string `json:"secondName"`
 	WebName    string `json:"webName"`
@@ -165,7 +164,6 @@ func load() (*Cache, *TeamIdx) {
 		key := strings.ToLower(player.WebName)
 		players[key] = &Player{
 			ID:         strconv.Itoa(player.ID),
-			TeamID:     strconv.Itoa(player.Team),
 			FirstName:  player.FirstName,
 			SecondName: player.SecondName,
 			WebName:    player.WebName,
