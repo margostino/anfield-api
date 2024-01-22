@@ -4,7 +4,19 @@ type Team {
   shortName: String!
 }
 
+type Player {
+  id: ID!
+  teamId: ID!
+  firstName: String!
+  secondName: String!
+  webName: String!
+  news: String!
+  newsAdded: String!
+  team: Team!
+}
+
 type Query {
-  team(id:ID!): Team
+  team(shortName:String!): Team
   teams: [Team]
+  player(webName:String!): Player  
 }

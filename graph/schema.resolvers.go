@@ -6,48 +6,32 @@ package graph
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
-	"io"
-	"log"
-	"net/http"
-	"strconv"
+	"strings"
 
+	"github.com/margostino/anfield-api/db"
 	"github.com/margostino/anfield-api/graph/model"
 )
 
 // Team is the resolver for the team field.
-func (r *queryResolver) Team(ctx context.Context, id string) (*model.Team, error) {
-	return &model.Team{
-		ID:   "1",
-		Name: "Liverpool",
-	}, nil
+func (r *queryResolver) Team(ctx context.Context, shortName string) (*model.Team, error) {
+	var key = strings.ToLower(shortName)
+	var data = db.Data.Teams[key]
+	var response = toTeamGraph(data)
+	return response, nil
 }
 
 // Teams is the resolver for the teams field.
 func (r *queryResolver) Teams(ctx context.Context) ([]*model.Team, error) {
-	response, err := http.Get("https://fantasy.premierleague.com/api/bootstrap-static/")
-	defer response.Body.Close()
-	var fplResponse model.FplResponse
-	if err != nil {
-		fmt.Printf("The HTTP request failed with error %s\n", err)
-	} else {
-		body, _ := io.ReadAll(response.Body)
-		if err := json.Unmarshal(body, &fplResponse); err != nil {
-			log.Fatalf("An Error Occured %v", err)
-		}
-	}
+	panic(fmt.Errorf("not implemented: Player - player"))
+}
 
-	// loop into fplResponse.Teams and create a model.Team for each one
-	teams := make([]*model.Team, len(fplResponse.Teams))
-	for i, team := range fplResponse.Teams {
-		teams[i] = &model.Team{
-			ID:        strconv.Itoa(team.Code),
-			Name:      team.Name,
-			ShortName: team.ShortName,
-		}
-	}
-	return teams, nil
+// Player is the resolver for the player field.
+func (r *queryResolver) Player(ctx context.Context, webName string) (*model.Player, error) {
+	var key = strings.ToLower(webName)
+	var data = db.Data.Players[key]
+	var response = toPlayerGraph(data)
+	return response, nil
 }
 
 // Query returns QueryResolver implementation.

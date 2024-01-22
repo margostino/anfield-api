@@ -2,6 +2,17 @@
 
 package model
 
+type Player struct {
+	ID         string `json:"id"`
+	TeamID     string `json:"teamId"`
+	FirstName  string `json:"firstName"`
+	SecondName string `json:"secondName"`
+	WebName    string `json:"webName"`
+	News       string `json:"news"`
+	NewsAdded  string `json:"newsAdded"`
+	Team       string  `json:"team"`
+}
+
 type Query struct {
 }
 
