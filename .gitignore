@@ -11,3 +11,4 @@ configuration.yml
 # Go
 ./runner/__debug_*
 */__debug_*
+.env*.local
