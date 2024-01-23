@@ -108,6 +108,7 @@ type ComplexityRoot struct {
 		PointsPerGame                    func(childComplexity int) int
 		PointsPerGameRank                func(childComplexity int) int
 		PointsPerGameRankType            func(childComplexity int) int
+		Position                         func(childComplexity int) int
 		RedCards                         func(childComplexity int) int
 		Saves                            func(childComplexity int) int
 		SavesPer90                       func(childComplexity int) int
@@ -606,6 +607,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Player.PointsPerGameRankType(childComplexity), true
+
+	case "Player.position":
+		if e.complexity.Player.Position == nil {
+			break
+		}
+
+		return e.complexity.Player.Position(childComplexity), true
 
 	case "Player.redCards":
 		if e.complexity.Player.RedCards == nil {
@@ -1377,6 +1385,50 @@ func (ec *executionContext) fieldContext_Player_team(ctx context.Context, field 
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Player_position(ctx context.Context, field graphql.CollectedField, obj *model.Player) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Player_position(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Position, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(model.PlayerPosition)
+	fc.Result = res
+	return ec.marshalNPlayerPosition2githubᚗcomᚋmargostinoᚋanfieldᚑapiᚋgraphᚋmodelᚐPlayerPosition(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Player_position(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Player",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type PlayerPosition does not have child fields")
 		},
 	}
 	return fc, nil
@@ -5085,6 +5137,8 @@ func (ec *executionContext) fieldContext_Query_player(ctx context.Context, field
 				return ec.fieldContext_Player_newsAdded(ctx, field)
 			case "team":
 				return ec.fieldContext_Player_team(ctx, field)
+			case "position":
+				return ec.fieldContext_Player_position(ctx, field)
 			case "chanceOfPlayingNextRound":
 				return ec.fieldContext_Player_chanceOfPlayingNextRound(ctx, field)
 			case "chanceOfPlayingThisRound":
@@ -7615,6 +7669,11 @@ func (ec *executionContext) _Player(ctx context.Context, sel ast.SelectionSet, o
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		case "position":
+			out.Values[i] = ec._Player_position(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "chanceOfPlayingNextRound":
 			out.Values[i] = ec._Player_chanceOfPlayingNextRound(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -8608,6 +8667,16 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) unmarshalNPlayerPosition2githubᚗcomᚋmargostinoᚋanfieldᚑapiᚋgraphᚋmodelᚐPlayerPosition(ctx context.Context, v interface{}) (model.PlayerPosition, error) {
+	var res model.PlayerPosition
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNPlayerPosition2githubᚗcomᚋmargostinoᚋanfieldᚑapiᚋgraphᚋmodelᚐPlayerPosition(ctx context.Context, sel ast.SelectionSet, v model.PlayerPosition) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) unmarshalNString2string(ctx context.Context, v interface{}) (string, error) {

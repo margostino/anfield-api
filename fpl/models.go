@@ -3,8 +3,17 @@ package fpl
 import "time"
 
 type Response struct {
-	Teams    []Team   `json:"teams"`
-	Elements []Player `json:"elements"`
+	Teams        []Team        `json:"teams"`
+	Elements     []Player      `json:"elements"`
+	ElementTypes []ElementType `json:"element_types"`
+}
+
+type ElementType struct {
+	ID                int    `json:"id"`
+	PluralName        string `json:"plural_name"`
+	PluralNameShort   string `json:"plural_name_short"`
+	SingularName      string `json:"singular_name"`
+	SingularNameShort string `json:"singular_name_short"`
 }
 
 type Team struct {

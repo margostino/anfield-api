@@ -28,6 +28,7 @@ func toPlayerGraph(player *db.Player) *model.Player {
 		News:                             player.News,
 		NewsAdded:                        player.NewsAdded,
 		Team:                             player.Team,
+		Position:                         model.PlayerPosition(player.Position),
 		ChanceOfPlayingNextRound:         player.ChanceOfPlayingNextRound,
 		ChanceOfPlayingThisRound:         player.ChanceOfPlayingThisRound,
 		CostChangeEvent:                  player.CostChangeEvent,
