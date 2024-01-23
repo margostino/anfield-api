@@ -44,7 +44,7 @@ type Player struct {
 	SecondName                       string    `json:"second_name"`
 	SelectedByPercent                string    `json:"selected_by_percent"`
 	Special                          bool      `json:"special"`
-	SquadNumber                      *int      `json:"squad_number"`
+	SquadNumber                      int       `json:"squad_number"`
 	Status                           string    `json:"status"`
 	Team                             int       `json:"team"`
 	TeamCode                         int       `json:"team_code"`
@@ -86,11 +86,11 @@ type Player struct {
 	ThreatRankType                   int       `json:"threat_rank_type"`
 	IctIndexRank                     int       `json:"ict_index_rank"`
 	IctIndexRankType                 int       `json:"ict_index_rank_type"`
-	CornersAndIndirectFreekicksOrder *int      `json:"corners_and_indirect_freekicks_order"`
+	CornersAndIndirectFreekicksOrder int       `json:"corners_and_indirect_freekicks_order"`
 	CornersAndIndirectFreekicksText  string    `json:"corners_and_indirect_freekicks_text"`
-	DirectFreekicksOrder             *int      `json:"direct_freekicks_order"`
+	DirectFreekicksOrder             int       `json:"direct_freekicks_order"`
 	DirectFreekicksText              string    `json:"direct_freekicks_text"`
-	PenaltiesOrder                   *int      `json:"penalties_order"`
+	PenaltiesOrder                   int       `json:"penalties_order"`
 	PenaltiesText                    string    `json:"penalties_text"`
 	ExpectedGoalsPer90               float64   `json:"expected_goals_per_90"`
 	SavesPer90                       float64   `json:"saves_per_90"`
