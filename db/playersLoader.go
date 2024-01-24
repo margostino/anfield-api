@@ -1,75 +1,23 @@
 package db
 
 import (
-	"encoding/json"
-	"io"
-	"net/http"
-	"os"
-	"strconv"
 	"strings"
 
-	"github.com/margostino/anfield-api/common"
 	"github.com/margostino/anfield-api/fpl"
 )
 
-var Data, TeamIndex = load()
-
-func load() (*Cache, *TeamIdx) {
-	var fplResponse fpl.Response
-	fplStaticUrl := os.Getenv("FPL_STATIC_URL")
-
-	response, err := http.Get(fplStaticUrl)
-	common.Check(err)
-	defer response.Body.Close()
-
-	body, err := io.ReadAll(response.Body)
-	common.Check(err)
-
-	err = json.Unmarshal(body, &fplResponse)
-	common.Check(err)
-
-	teams := make(map[string]*Team)
-	teamIndex := make(map[string]*Team)
-	for _, team := range fplResponse.Teams {
-		key := strings.ToLower(team.ShortName)
-		teamElement := &Team{
-			ID:                  strconv.Itoa(team.Code),
-			Name:                team.Name,
-			ShortName:           team.ShortName,
-			StrengthOverallHome: team.StrengthOverallHome,
-			StrengthOverallAway: team.StrengthOverallAway,
-			StrengthAttackHome:  team.StrengthAttackHome,
-			StrengthAttackAway:  team.StrengthAttackAway,
-			StrengthDefenceHome: team.StrengthDefenceHome,
-			StrengthDefenceAway: team.StrengthDefenceAway,
-		}
-		teams[key] = teamElement
-		teamIndex[strconv.Itoa(team.Code)] = teamElement
-
-	}
-
-	elementTypes := make(map[int]*ElementType)
-	for _, elementType := range fplResponse.ElementTypes {
-		elementTypes[elementType.ID] = &ElementType{
-			ID:                elementType.ID,
-			PluralName:        elementType.PluralName,
-			PluralNameShort:   elementType.PluralNameShort,
-			SingularName:      elementType.SingularName,
-			SingularNameShort: elementType.SingularNameShort,
-		}
-	}
-
+func loadPlayers(fplPlayers []*fpl.Player, teamIndex map[int]*Team, elementTypes map[int]*ElementType) map[string]*Player {
 	players := make(map[string]*Player)
-	for _, player := range fplResponse.Elements {
+	for _, player := range fplPlayers {
 		key := strings.ToLower(player.WebName)
 		players[key] = &Player{
-			ID:                               strconv.Itoa(player.ID),
+			ID:                               player.ID,
 			FirstName:                        player.FirstName,
 			SecondName:                       player.SecondName,
 			WebName:                          player.WebName,
 			News:                             player.News,
 			NewsAdded:                        player.NewsAdded.Format("2006-01-02"),
-			Team:                             teamIndex[strconv.Itoa(player.TeamCode)].Name,
+			Team:                             teamIndex[player.Team].Name,
 			Position:                         elementTypes[player.ElementType].SingularNameShort,
 			ChanceOfPlayingNextRound:         player.ChanceOfPlayingNextRound,
 			ChanceOfPlayingThisRound:         player.ChanceOfPlayingThisRound,
@@ -153,12 +101,5 @@ func load() (*Cache, *TeamIdx) {
 			CleanSheetsPer90:                 player.CleanSheetsPer90,
 		}
 	}
-
-	return &Cache{
-			Teams:        teams,
-			Players:      players,
-			ElementTypes: elementTypes,
-		}, &TeamIdx{
-			Index: teamIndex,
-		}
+	return players
 }
