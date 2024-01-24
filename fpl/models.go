@@ -2,10 +2,82 @@ package fpl
 
 import "time"
 
-type Response struct {
-	Teams        []Team        `json:"teams"`
-	Elements     []Player      `json:"elements"`
-	ElementTypes []ElementType `json:"element_types"`
+type StaticResponse struct {
+	Teams        []*Team        `json:"teams"`
+	Players      []*Player      `json:"elements"`
+	ElementTypes []*ElementType `json:"element_types"`
+	Events       []*Event       `json:"events"`
+}
+
+type FixturesResponse []*Fixture
+
+type ChipPlay struct {
+	ChipName  string `json:"chip_name"`
+	NumPlayed int    `json:"num_played"`
+}
+
+type TopElementInfo struct {
+	ID     int `json:"id"`
+	Points int `json:"points"`
+}
+
+type TeamStat struct {
+	Value   *int `json:"value,omitempty"`
+	Element *int `json:"element,omitempty"`
+}
+
+type Stat struct {
+	Identifier *string     `json:"identifier,omitempty"`
+	TeamA      []*TeamStat `json:"a,omitempty"`
+	TeamH      []*TeamStat `json:"h,omitempty"`
+}
+
+type Fixture struct {
+	Code                 int     `json:"code"`
+	Event                *int    `json:"event,omitempty"`
+	Finished             *bool   `json:"finished,omitempty"`
+	FinishedProvisional  *bool   `json:"finished_provisional,omitempty"`
+	ID                   int     `json:"id"`
+	KickoffTime          *string `json:"kickoff_time,omitempty"`
+	Minutes              *int    `json:"minutes,omitempty"`
+	ProvisionalStartTime *bool   `json:"provisional_start_time,omitempty"`
+	Started              *bool   `json:"started,omitempty"`
+	TeamA                *int    `json:"team_a,omitempty"`
+	TeamAScore           *int    `json:"team_a_score,omitempty"`
+	TeamH                *int    `json:"team_h,omitempty"`
+	TeamHScore           *int    `json:"team_h_score,omitempty"`
+	Stats                []*Stat `json:"stats,omitempty"`
+	TeamHDifficulty      *int    `json:"team_h_difficulty,omitempty"`
+	TeamADifficulty      *int    `json:"team_a_difficulty,omitempty"`
+	PulseID              *int    `json:"pulse_id,omitempty"`
+}
+
+type Event struct {
+	ID                     int             `json:"id"`
+	Name                   string          `json:"name"`
+	DeadlineTime           time.Time       `json:"deadline_time"`
+	AverageEntryScore      int             `json:"average_entry_score"`
+	Finished               bool            `json:"finished"`
+	DataChecked            bool            `json:"data_checked"`
+	HighestScoringEntry    int             `json:"highest_scoring_entry"`
+	DeadlineTimeEpoch      int             `json:"deadline_time_epoch"`
+	DeadlineTimeGameOffset int             `json:"deadline_time_game_offset"`
+	HighestScore           int             `json:"highest_score"`
+	IsPrevious             bool            `json:"is_previous"`
+	IsCurrent              bool            `json:"is_current"`
+	IsNext                 bool            `json:"is_next"`
+	CupLeaguesCreated      bool            `json:"cup_leagues_created"`
+	H2hKoMatchesCreated    bool            `json:"h2h_ko_matches_created"`
+	RankedCount            int             `json:"ranked_count"`
+	ChipPlays              []*ChipPlay     `json:"chip_plays"`
+	MostSelected           int             `json:"most_selected"`
+	MostTransferredIn      int             `json:"most_transferred_in"`
+	TopElement             int             `json:"top_element"`
+	TopElementInfo         *TopElementInfo `json:"top_element_info"`
+	TransfersMade          int             `json:"transfers_made"`
+	MostCaptained          int             `json:"most_captained"`
+	MostViceCaptained      int             `json:"most_vice_captained"`
+	Fixtures               []*Fixture      `json:"fixtures"`
 }
 
 type ElementType struct {
@@ -19,13 +91,23 @@ type ElementType struct {
 type Team struct {
 	Code                int    `json:"code"`
 	Name                string `json:"name"`
+	ID                  int    `json:"id"`
 	ShortName           string `json:"short_name"`
+	Strength            int    `json:"strength"`
 	StrengthOverallHome int    `json:"strength_overall_home"`
 	StrengthOverallAway int    `json:"strength_overall_away"`
 	StrengthAttackHome  int    `json:"strength_attack_home"`
 	StrengthAttackAway  int    `json:"strength_attack_away"`
 	StrengthDefenceHome int    `json:"strength_defence_home"`
 	StrengthDefenceAway int    `json:"strength_defence_away"`
+	PulseID             int    `json:"pulse_id"`
+	Win                 int    `json:"win"`
+	Draw                int    `json:"draw"`
+	Loss                int    `json:"loss"`
+	Played              int    `json:"played"`
+	Points              int    `json:"points"`
+	Position            int    `json:"position"`
+	Unavailable         bool   `json:"unavailable"`
 }
 
 type Player struct {

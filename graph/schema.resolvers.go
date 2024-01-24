@@ -6,12 +6,38 @@ package graph
 
 import (
 	"context"
-	"fmt"
 	"strings"
 
 	"github.com/margostino/anfield-api/db"
 	"github.com/margostino/anfield-api/graph/model"
 )
+
+// Teams is the resolver for the teams field.
+func (r *queryResolver) Teams(ctx context.Context) ([]*model.Team, error) {
+	var response []*model.Team
+	for _, team := range db.Data.Teams {
+		response = append(response, toTeamGraph(team))
+	}
+	return response, nil
+}
+
+// Players is the resolver for the players field.
+func (r *queryResolver) Players(ctx context.Context) ([]*model.Player, error) {
+	var response []*model.Player
+	for _, player := range db.Data.Players {
+		response = append(response, toPlayerGraph(player))
+	}
+	return response, nil
+}
+
+// Events is the resolver for the events field.
+func (r *queryResolver) Events(ctx context.Context) ([]*model.Event, error) {
+	var response []*model.Event
+	for _, event := range db.Data.Events {
+		response = append(response, toEventGraph(event))
+	}
+	return response, nil
+}
 
 // Team is the resolver for the team field.
 func (r *queryResolver) Team(ctx context.Context, shortName string) (*model.Team, error) {
@@ -21,16 +47,18 @@ func (r *queryResolver) Team(ctx context.Context, shortName string) (*model.Team
 	return response, nil
 }
 
-// Teams is the resolver for the teams field.
-func (r *queryResolver) Teams(ctx context.Context) ([]*model.Team, error) {
-	panic(fmt.Errorf("not implemented: Player - player"))
-}
-
 // Player is the resolver for the player field.
 func (r *queryResolver) Player(ctx context.Context, webName string) (*model.Player, error) {
 	var key = strings.ToLower(webName)
 	var data = db.Data.Players[key]
 	var response = toPlayerGraph(data)
+	return response, nil
+}
+
+// Event is the resolver for the event field.
+func (r *queryResolver) Event(ctx context.Context, id int) (*model.Event, error) {
+	var data = db.Data.Events[id]
+	var response = toEventGraph(data)
 	return response, nil
 }
 

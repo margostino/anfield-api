@@ -5,8 +5,78 @@ enum PlayerPosition {
   FWD
 }
 
+type ChipPlay {
+  chipName: String!
+  numPlayed: Int!
+}
+type TopElementInfo {
+  id: Int!
+  points: Int!
+}
+
+type Fixture {
+  code: Int!
+  event: Int
+  finished: Boolean
+  finishedProvisional: Boolean
+  id: Int!
+  kickoffTime: String
+  minutes: Int
+  provisionalStartTime: Boolean
+  started: Boolean
+  teamA: Int
+  teamAName: String
+  teamAScore: Int
+  teamH: Int
+  teamHName: String
+  teamHScore: Int
+  stats: [Stat]
+  teamHDifficulty: Int
+  teamADifficulty: Int
+  pulseId: Int
+}
+
+type Stat {
+  identifier: String
+  teamA: [TeamStat]
+  teamH: [TeamStat]
+}
+
+type TeamStat {
+  value: Int
+  element: Int
+}
+
+type Event {
+  id: Int!
+  name: String!
+  deadlineTime: String!
+  averageEntryScore: Int!
+  finished: Boolean!
+  dataChecked: Boolean!
+  highestScoringEntry: Int!
+  deadlineTimeEpoch: Int!
+  deadlineTimeGameOffset: Int!
+  highestScore: Int!
+  isPrevious: Boolean!
+  isCurrent: Boolean!
+  isNext: Boolean!
+  cupLeaguesCreated: Boolean!
+  h2hKoMatchesCreated: Boolean!
+  rankedCount: Int!
+  chipPlays: [ChipPlay!]!
+  mostSelected: Int!
+  mostTransferredIn: Int!
+  topElement: Int!
+  topElementInfo: TopElementInfo!
+  transfersMade: Int!
+  mostCaptained: Int!
+  mostViceCaptained: Int!
+  fixtures: [Fixture!]!
+}
+
 type Team {
-  id: ID!
+  id: Int!
   name: String!
   shortName: String!
 	strengthOverallHome: Int!,
@@ -18,7 +88,7 @@ type Team {
 }
 
 type Player {
-  id: ID!
+  id: Int!
   firstName: String!
   secondName: String!
   webName: String!
@@ -109,7 +179,10 @@ type Player {
 }
 
 type Query {
-  team(shortName:String!): Team
   teams: [Team]
-  player(webName:String!): Player  
+  players: [Player]
+  events: [Event]
+  team(shortName:String!): Team
+  player(webName:String!): Player
+  event(id:Int!): Event
 }

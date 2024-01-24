@@ -111,3 +111,89 @@ func toPlayerGraph(player *db.Player) *model.Player {
 		CleanSheetsPer90:                 player.CleanSheetsPer90,
 	}
 }
+
+func toEventGraph(event *db.Event) *model.Event {
+	chipPlays := make([]*model.ChipPlay, 0)
+	for _, chipPlay := range event.ChipPlays {
+		if chipPlay != nil {
+			chipPlays = append(chipPlays, &model.ChipPlay{
+				ChipName:  chipPlay.ChipName,
+				NumPlayed: chipPlay.NumPlayed,
+			})
+		}
+	}
+
+	fixtures := make([]*model.Fixture, 0)
+	for _, fixture := range event.Fixtures {
+		if fixture != nil {
+			stats := make([]*model.Stat, 0)
+			for _, stat := range fixture.Stats {
+				if stat != nil {
+					statsTeamA := make([]*model.TeamStat, 0)
+					for _, teamA := range stat.TeamA {
+						if teamA != nil {
+							statTeamA := model.TeamStat{
+								Value:   teamA.Value,
+								Element: teamA.Element,
+							}
+							statsTeamA = append(statsTeamA, &statTeamA)
+						}
+					}
+					statsTeamH := make([]*model.TeamStat, 0)
+					for _, teamH := range stat.TeamH {
+						if teamH != nil {
+							statTeamH := model.TeamStat{
+								Value:   teamH.Value,
+								Element: teamH.Element,
+							}
+							statsTeamH = append(statsTeamH, &statTeamH)
+						}
+					}
+
+					stats = append(stats, &model.Stat{
+						Identifier: stat.Identifier,
+						TeamA:      statsTeamA,
+						TeamH:      statsTeamH,
+					})
+				}
+			}
+
+			fixtures = append(fixtures, &model.Fixture{
+				ID:                   fixture.ID,
+				Code:                 fixture.Code,
+				TeamH:                fixture.TeamH,
+				TeamA:                fixture.TeamA,
+				TeamAName:            fixture.TeamAName,
+				TeamHName:            fixture.TeamHName,
+				TeamHScore:           fixture.TeamHScore,
+				TeamAScore:           fixture.TeamAScore,
+				Event:                fixture.Event,
+				Finished:             fixture.Finished,
+				Minutes:              fixture.Minutes,
+				ProvisionalStartTime: fixture.ProvisionalStartTime,
+				KickoffTime:          fixture.KickoffTime,
+				Stats:                stats,
+				PulseID:              fixture.PulseID,
+				TeamHDifficulty:      fixture.TeamHDifficulty,
+				TeamADifficulty:      fixture.TeamADifficulty,
+			})
+		}
+	}
+	return &model.Event{
+		ID:                     event.ID,
+		Name:                   event.Name,
+		DeadlineTime:           event.DeadlineTime,
+		AverageEntryScore:      event.AverageEntryScore,
+		Finished:               event.Finished,
+		DataChecked:            event.DataChecked,
+		HighestScoringEntry:    event.HighestScoringEntry,
+		DeadlineTimeEpoch:      event.DeadlineTimeEpoch,
+		DeadlineTimeGameOffset: event.DeadlineTimeGameOffset,
+		HighestScore:           event.HighestScore,
+		IsPrevious:             event.IsPrevious,
+		IsCurrent:              event.IsCurrent,
+		IsNext:                 event.IsNext,
+		ChipPlays:              chipPlays,
+		Fixtures:               fixtures,
+	}
+}

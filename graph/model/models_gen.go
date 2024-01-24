@@ -8,8 +8,63 @@ import (
 	"strconv"
 )
 
+type ChipPlay struct {
+	ChipName  string `json:"chipName"`
+	NumPlayed int    `json:"numPlayed"`
+}
+
+type Event struct {
+	ID                     int             `json:"id"`
+	Name                   string          `json:"name"`
+	DeadlineTime           string          `json:"deadlineTime"`
+	AverageEntryScore      int             `json:"averageEntryScore"`
+	Finished               bool            `json:"finished"`
+	DataChecked            bool            `json:"dataChecked"`
+	HighestScoringEntry    int             `json:"highestScoringEntry"`
+	DeadlineTimeEpoch      int             `json:"deadlineTimeEpoch"`
+	DeadlineTimeGameOffset int             `json:"deadlineTimeGameOffset"`
+	HighestScore           int             `json:"highestScore"`
+	IsPrevious             bool            `json:"isPrevious"`
+	IsCurrent              bool            `json:"isCurrent"`
+	IsNext                 bool            `json:"isNext"`
+	CupLeaguesCreated      bool            `json:"cupLeaguesCreated"`
+	H2hKoMatchesCreated    bool            `json:"h2hKoMatchesCreated"`
+	RankedCount            int             `json:"rankedCount"`
+	ChipPlays              []*ChipPlay     `json:"chipPlays"`
+	MostSelected           int             `json:"mostSelected"`
+	MostTransferredIn      int             `json:"mostTransferredIn"`
+	TopElement             int             `json:"topElement"`
+	TopElementInfo         *TopElementInfo `json:"topElementInfo"`
+	TransfersMade          int             `json:"transfersMade"`
+	MostCaptained          int             `json:"mostCaptained"`
+	MostViceCaptained      int             `json:"mostViceCaptained"`
+	Fixtures               []*Fixture      `json:"fixtures"`
+}
+
+type Fixture struct {
+	Code                 int     `json:"code"`
+	Event                *int    `json:"event,omitempty"`
+	Finished             *bool   `json:"finished,omitempty"`
+	FinishedProvisional  *bool   `json:"finishedProvisional,omitempty"`
+	ID                   int     `json:"id"`
+	KickoffTime          *string `json:"kickoffTime,omitempty"`
+	Minutes              *int    `json:"minutes,omitempty"`
+	ProvisionalStartTime *bool   `json:"provisionalStartTime,omitempty"`
+	Started              *bool   `json:"started,omitempty"`
+	TeamA                *int    `json:"teamA,omitempty"`
+	TeamAName            *string `json:"teamAName,omitempty"`
+	TeamAScore           *int    `json:"teamAScore,omitempty"`
+	TeamH                *int    `json:"teamH,omitempty"`
+	TeamHName            *string `json:"teamHName,omitempty"`
+	TeamHScore           *int    `json:"teamHScore,omitempty"`
+	Stats                []*Stat `json:"stats,omitempty"`
+	TeamHDifficulty      *int    `json:"teamHDifficulty,omitempty"`
+	TeamADifficulty      *int    `json:"teamADifficulty,omitempty"`
+	PulseID              *int    `json:"pulseId,omitempty"`
+}
+
 type Player struct {
-	ID                               string         `json:"id"`
+	ID                               int            `json:"id"`
 	FirstName                        string         `json:"firstName"`
 	SecondName                       string         `json:"secondName"`
 	WebName                          string         `json:"webName"`
@@ -102,8 +157,14 @@ type Player struct {
 type Query struct {
 }
 
+type Stat struct {
+	Identifier *string     `json:"identifier,omitempty"`
+	TeamA      []*TeamStat `json:"teamA,omitempty"`
+	TeamH      []*TeamStat `json:"teamH,omitempty"`
+}
+
 type Team struct {
-	ID                  string `json:"id"`
+	ID                  int    `json:"id"`
 	Name                string `json:"name"`
 	ShortName           string `json:"shortName"`
 	StrengthOverallHome int    `json:"strengthOverallHome"`
@@ -112,6 +173,16 @@ type Team struct {
 	StrengthAttackAway  int    `json:"strengthAttackAway"`
 	StrengthDefenceHome int    `json:"strengthDefenceHome"`
 	StrengthDefenceAway int    `json:"strengthDefenceAway"`
+}
+
+type TeamStat struct {
+	Value   *int `json:"value,omitempty"`
+	Element *int `json:"element,omitempty"`
+}
+
+type TopElementInfo struct {
+	ID     int `json:"id"`
+	Points int `json:"points"`
 }
 
 type PlayerPosition string
