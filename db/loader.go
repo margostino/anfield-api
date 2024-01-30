@@ -1,52 +1,27 @@
 package db
 
 import (
-	"encoding/json"
-	"io"
-	"net/http"
 	"os"
+	"sync"
 
-	"github.com/margostino/anfield-api/common"
 	"github.com/margostino/anfield-api/fpl"
+	"github.com/margostino/anfield-api/network"
 )
 
 var Data, TeamIndex = load()
 
-func get(url string, fplResponse interface{}) {
-	response, err := http.Get(url)
-	common.Check(err)
-	defer response.Body.Close()
-
-	body, err := io.ReadAll(response.Body)
-	common.Check(err)
-
-	err = json.Unmarshal(body, fplResponse)
-	common.Check(err)
-}
-
 func load() (*Cache, *TeamIdx) {
+	var wg sync.WaitGroup
 	var fplStaticResponse fpl.StaticResponse
 	var fplFixturesResponse fpl.FixturesResponse
 
 	fplStaticUrl := os.Getenv("FPL_STATIC_URL")
 	fplFixturesUrl := os.Getenv("FPL_FIXTURES_URL")
 
-	get(fplStaticUrl, &fplStaticResponse)
-	get(fplFixturesUrl, &fplFixturesResponse)
-
-	responseFixtures, err := http.Get(fplFixturesUrl)
-	common.Check(err)
-	defer responseFixtures.Body.Close()
-
-	response, err := http.Get(fplStaticUrl)
-	common.Check(err)
-	defer response.Body.Close()
-
-	body, err := io.ReadAll(response.Body)
-	common.Check(err)
-
-	err = json.Unmarshal(body, &fplStaticResponse)
-	common.Check(err)
+	wg.Add(2)
+	go network.Get(fplStaticUrl, &fplStaticResponse, &wg, nil)
+	go network.Get(fplFixturesUrl, &fplFixturesResponse, &wg, nil)
+	wg.Wait()
 
 	teams, teamIndex := loadTeams(fplStaticResponse.Teams)
 	events := loadEvents(fplStaticResponse.Events, fplFixturesResponse, teamIndex)

@@ -1,8 +1,15 @@
 package graph
 
 import (
+	"fmt"
+	"os"
+	"strconv"
+
+	"github.com/margostino/anfield-api/common"
 	"github.com/margostino/anfield-api/db"
 	"github.com/margostino/anfield-api/graph/model"
+	"github.com/margostino/anfield-api/network"
+	"github.com/margostino/anfield-api/pulse"
 )
 
 func toTeamGraph(team *db.Team) *model.Team {
@@ -196,4 +203,69 @@ func toEventGraph(event *db.Event) *model.Event {
 		ChipPlays:              chipPlays,
 		Fixtures:               fixtures,
 	}
+}
+
+func toH2HGraph(teamHData *db.Team, teamAData *db.Team) *model.H2h {
+	pulseH2HUrl := os.Getenv("PULSE_H2H_URL")
+	pulseHeaders := map[string]string{
+		"Origin": "https://www.premierleague.com",
+	}
+	var pulseH2HResponse pulse.H2HResponse
+
+	pulseH2HUrlWithParams := fmt.Sprintf("%s?teams=%d,%d&altIds=true&comps=1", pulseH2HUrl, teamHData.PulseID, teamAData.PulseID)
+	network.Get(pulseH2HUrlWithParams, &pulseH2HResponse, nil, pulseHeaders)
+
+	h2h := &model.H2h{
+		StatsTeamA: make([]*model.StatsTeam, 0),
+		StatsTeamH: make([]*model.StatsTeam, 0),
+		Gameweeks:  make([]*model.Gameweek, 0),
+	}
+
+	for id, stats := range pulseH2HResponse.Stats {
+		teamStats := make([]*model.StatsTeam, 0)
+		for _, statsElement := range stats {
+			teamStatsElement := &model.StatsTeam{
+				Name:        statsElement.Name,
+				Value:       statsElement.Value,
+				Description: statsElement.Description,
+			}
+			teamStats = append(teamStats, teamStatsElement)
+		}
+
+		// convert string id to int
+		idNumber, err := strconv.Atoi(id)
+		common.Check(err)
+
+		if idNumber == *&teamHData.PulseID {
+			h2h.StatsTeamH = teamStats
+		} else {
+			h2h.StatsTeamA = teamStats
+		}
+	}
+
+	for _, gameweek := range pulseH2HResponse.HeadToHeads {
+		var teamAName, teamHName string
+		var teamAScore, teamHScore int
+
+		if gameweek.Teams[0].Team.Id == float32(teamHData.PulseID) {
+			teamHName = gameweek.Teams[0].Team.Name
+			teamAName = gameweek.Teams[1].Team.Name
+			teamHScore = int(gameweek.Teams[0].Score)
+			teamAScore = int(gameweek.Teams[1].Score)
+		} else {
+			teamHName = gameweek.Teams[1].Team.Name
+			teamAName = gameweek.Teams[0].Team.Name
+			teamHScore = int(gameweek.Teams[1].Score)
+			teamAScore = int(gameweek.Teams[0].Score)
+		}
+		h2h.Gameweeks = append(h2h.Gameweeks, &model.Gameweek{
+			Kickoff:    gameweek.Kickoff.Label,
+			Stadium:    gameweek.Ground.Name,
+			TeamAName:  teamAName,
+			TeamHName:  teamHName,
+			ScoreTeamA: teamAScore,
+			ScoreTeamH: teamHScore,
+		})
+	}
+	return h2h
 }

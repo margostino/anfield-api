@@ -61,6 +61,23 @@ type Fixture struct {
 	TeamHDifficulty      *int    `json:"teamHDifficulty,omitempty"`
 	TeamADifficulty      *int    `json:"teamADifficulty,omitempty"`
 	PulseID              *int    `json:"pulseId,omitempty"`
+	TeamAPulseID         *int    `json:"teamAPulseId,omitempty"`
+	TeamHPulseID         *int    `json:"teamHPulseId,omitempty"`
+}
+
+type Gameweek struct {
+	Kickoff    string `json:"Kickoff"`
+	TeamAName  string `json:"TeamAName"`
+	ScoreTeamA int    `json:"ScoreTeamA"`
+	TeamHName  string `json:"TeamHName"`
+	ScoreTeamH int    `json:"ScoreTeamH"`
+	Stadium    string `json:"Stadium"`
+}
+
+type H2h struct {
+	StatsTeamA []*StatsTeam `json:"StatsTeamA,omitempty"`
+	StatsTeamH []*StatsTeam `json:"StatsTeamH,omitempty"`
+	Gameweeks  []*Gameweek  `json:"Gameweeks,omitempty"`
 }
 
 type Player struct {
@@ -163,6 +180,12 @@ type Stat struct {
 	TeamH      []*TeamStat `json:"teamH,omitempty"`
 }
 
+type StatsTeam struct {
+	Name        string  `json:"Name"`
+	Value       float64 `json:"Value"`
+	Description string  `json:"Description"`
+}
+
 type Team struct {
 	ID                  int    `json:"id"`
 	Name                string `json:"name"`
@@ -173,6 +196,7 @@ type Team struct {
 	StrengthAttackAway  int    `json:"strengthAttackAway"`
 	StrengthDefenceHome int    `json:"strengthDefenceHome"`
 	StrengthDefenceAway int    `json:"strengthDefenceAway"`
+	PulseID             int    `json:"pulseID"`
 }
 
 type TeamStat struct {

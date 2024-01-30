@@ -21,6 +21,7 @@ func loadTeams(fplTeams []*fpl.Team) (map[string]*Team, map[int]*Team) {
 			StrengthAttackAway:  team.StrengthAttackAway,
 			StrengthDefenceHome: team.StrengthDefenceHome,
 			StrengthDefenceAway: team.StrengthDefenceAway,
+			PulseID:             team.PulseID,
 		}
 		teams[key] = teamElement
 		teamIndex[team.ID] = teamElement

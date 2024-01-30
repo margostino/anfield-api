@@ -12,3 +12,6 @@ configuration.yml
 ./runner/__debug_*
 */__debug_*
 .env*.local
+
+# VS code
+.vscode

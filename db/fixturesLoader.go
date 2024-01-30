@@ -54,6 +54,8 @@ func loadFixtures(fplFixturesResponse fpl.FixturesResponse, teamIndex map[int]*T
 				TeamHDifficulty:      fixture.TeamHDifficulty,
 				TeamADifficulty:      fixture.TeamADifficulty,
 				PulseID:              fixture.PulseID,
+				TeamAPulseID:         &teamIndex[*fixture.TeamA].PulseID,
+				TeamHPulseID:         &teamIndex[*fixture.TeamH].PulseID,
 			})
 		}
 	}

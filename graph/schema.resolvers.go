@@ -6,6 +6,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 	"strings"
 
 	"github.com/margostino/anfield-api/db"
@@ -62,7 +63,30 @@ func (r *queryResolver) Event(ctx context.Context, id int) (*model.Event, error)
 	return response, nil
 }
 
+// H2h is the resolver for the h2h field.
+func (r *queryResolver) H2h(ctx context.Context, teamAShortName string, teamHShortName string) (*model.H2h, error) {
+	var teamAKey = strings.ToLower(teamAShortName)
+	var teamHKey = strings.ToLower(teamHShortName)
+	var teamAData = db.Data.Teams[teamAKey]
+	var teamHData = db.Data.Teams[teamHKey]
+	h2h := toH2HGraph(teamAData, teamHData)
+	return h2h, nil
+}
+
 // Query returns QueryResolver implementation.
 func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
 
 type queryResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *queryResolver) Fixture(ctx context.Context, id int) (*model.Fixture, error) {
+	panic(fmt.Errorf("not implemented: Fixture - fixture"))
+}
+func (r *queryResolver) Fixtures(ctx context.Context) ([]*model.Fixture, error) {
+	panic(fmt.Errorf("not implemented: Fixtures - fixtures"))
+}

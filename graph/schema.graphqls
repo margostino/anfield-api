@@ -14,6 +14,27 @@ type TopElementInfo {
   points: Int!
 }
 
+type StatsTeam {
+  Name: String!
+  Value: Float!
+  Description: String!
+}
+
+type Gameweek {
+  Kickoff: String!
+  TeamAName: String!
+  ScoreTeamA: Int!
+  TeamHName: String!
+  ScoreTeamH: Int!
+  Stadium: String!
+}
+
+type H2H {
+  StatsTeamA: [StatsTeam]
+  StatsTeamH: [StatsTeam]
+  Gameweeks: [Gameweek]
+}
+
 type Fixture {
   code: Int!
   event: Int
@@ -34,6 +55,8 @@ type Fixture {
   teamHDifficulty: Int
   teamADifficulty: Int
   pulseId: Int
+  teamAPulseId: Int
+  teamHPulseId: Int
 }
 
 type Stat {
@@ -85,6 +108,7 @@ type Team {
   strengthAttackAway: Int!,
   strengthDefenceHome: Int!,
   strengthDefenceAway: Int!,
+  pulseID: Int!
 }
 
 type Player {
@@ -185,4 +209,5 @@ type Query {
   team(shortName:String!): Team
   player(webName:String!): Player
   event(id:Int!): Event
+  h2h(teamAShortName:String!, teamHShortName:String!): H2H
 }

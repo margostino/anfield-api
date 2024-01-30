@@ -41,6 +41,8 @@ type Fixture struct {
 	TeamHDifficulty      *int    `json:"teamHDifficulty,omitempty"`
 	TeamADifficulty      *int    `json:"teamADifficulty,omitempty"`
 	PulseID              *int    `json:"pulseId,omitempty"`
+	TeamAPulseID         *int    `json:"teamAPulseId,omitempty"`
+	TeamHPulseID         *int    `json:"teamHPulseId,omitempty"`
 }
 
 type Event struct {
@@ -172,6 +174,7 @@ type Team struct {
 	StrengthAttackAway  int    `json:"strengthAttackAway"`
 	StrengthDefenceHome int    `json:"strengthDefenceHome"`
 	StrengthDefenceAway int    `json:"strengthDefenceAway"`
+	PulseID             int    `json:"pulseId"`
 }
 
 type ElementType struct {
@@ -191,4 +194,7 @@ type Cache struct {
 
 type TeamIdx struct {
 	Index map[int]*Team
+}
+type FixtureIdx struct {
+	Index map[int]*Fixture
 }
