@@ -20,6 +20,9 @@ type StatsTeam {
   Description: String!
 }
 
+"""
+  Information a Gameweek between Team Home and Team Away by kickoff datetime.
+"""
 type Gameweek {
   Kickoff: String!
   TeamAName: String!
@@ -30,8 +33,17 @@ type Gameweek {
 }
 
 type H2H {
+  """
+    Stats of Team Away. Example: accurate_back_zone_pass, accurate_long_balls, aerial_won, defender_goals, etc.
+  """
   StatsTeamA: [StatsTeam]
+  """
+    Stats of Team Home. Example: accurate_back_zone_pass, accurate_long_balls, aerial_won, defender_goals, etc.
+  """  
   StatsTeamH: [StatsTeam]
+  """
+    Information about preview Gameweeks between Team Home and Team Away.
+  """
   Gameweeks: [Gameweek]
 }
 
@@ -70,6 +82,9 @@ type TeamStat {
   element: Int
 }
 
+"""
+  Information about a Gameweek including all fixtures.
+"""
 type Event {
   id: Int!
   name: String!
@@ -209,5 +224,6 @@ type Query {
   team(shortName:String!): Team
   player(webName:String!): Player
   event(id:Int!): Event
+  "Head to Head information between Team Home and Team Away. Arguments are the short names of team home and team away."
   h2h(teamAShortName:String!, teamHShortName:String!): H2H
 }

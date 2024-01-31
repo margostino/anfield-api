@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/margostino/anfield-api/auth"
 	"github.com/margostino/anfield-api/graph"
 	"github.com/margostino/anfield-api/metrics"
 	// "github.com/margostino/anfield-api/graph/generated"
@@ -13,8 +14,12 @@ import (
 var server = newServer()
 
 func Query(w http.ResponseWriter, r *http.Request) {
-	go metrics.PublishRequest(r)
-	server.ServeHTTP(w, r)
+	if auth.IsAuthorized(r) {
+		go metrics.PublishRequest(r)
+		server.ServeHTTP(w, r)
+	} else {
+		w.WriteHeader(http.StatusUnauthorized)
+	}
 }
 
 func newServer() *handler.Server {

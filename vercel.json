@@ -3,7 +3,7 @@
         "silent": true
     },
     "functions": {
-        "api/hello.go": {
+        "api/ping.go": {
             "maxDuration": 5
         },
         "api/query.go": {
