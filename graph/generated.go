@@ -214,7 +214,7 @@ type ComplexityRoot struct {
 		Events  func(childComplexity int) int
 		H2h     func(childComplexity int, teamAShortName string, teamHShortName string) int
 		Player  func(childComplexity int, webName string) int
-		Players func(childComplexity int) int
+		Players func(childComplexity int, teamShortName *string) int
 		Team    func(childComplexity int, shortName string) int
 		Teams   func(childComplexity int) int
 	}
@@ -257,7 +257,7 @@ type ComplexityRoot struct {
 
 type QueryResolver interface {
 	Teams(ctx context.Context) ([]*model.Team, error)
-	Players(ctx context.Context) ([]*model.Player, error)
+	Players(ctx context.Context, teamShortName *string) ([]*model.Player, error)
 	Events(ctx context.Context) ([]*model.Event, error)
 	Team(ctx context.Context, shortName string) (*model.Team, error)
 	Player(ctx context.Context, webName string) (*model.Player, error)
@@ -1347,7 +1347,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		return e.complexity.Query.Players(childComplexity), true
+		args, err := ec.field_Query_players_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.Players(childComplexity, args["teamShortName"].(*string)), true
 
 	case "Query.team":
 		if e.complexity.Query.Team == nil {
@@ -1682,6 +1687,21 @@ func (ec *executionContext) field_Query_player_args(ctx context.Context, rawArgs
 		}
 	}
 	args["webName"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_players_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *string
+	if tmp, ok := rawArgs["teamShortName"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("teamShortName"))
+		arg0, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["teamShortName"] = arg0
 	return args, nil
 }
 
@@ -8223,7 +8243,7 @@ func (ec *executionContext) _Query_players(ctx context.Context, field graphql.Co
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Players(rctx)
+		return ec.resolvers.Query().Players(rctx, fc.Args["teamShortName"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8424,6 +8444,17 @@ func (ec *executionContext) fieldContext_Query_players(ctx context.Context, fiel
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Player", field.Name)
 		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_players_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
 	}
 	return fc, nil
 }

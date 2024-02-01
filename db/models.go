@@ -81,6 +81,7 @@ type Player struct {
 	News                             string  `json:"news"`
 	NewsAdded                        string  `json:"newsAdded"`
 	Team                             string  `json:"team"`
+	TeamShortName                    string  `json:"teamShortName"`
 	Position                         string  `json:"position"`
 	ChanceOfPlayingNextRound         int     `json:"chance_of_playing_next_round"`
 	ChanceOfPlayingThisRound         int     `json:"chance_of_playing_this_round"`

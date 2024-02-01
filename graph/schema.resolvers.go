@@ -23,9 +23,14 @@ func (r *queryResolver) Teams(ctx context.Context) ([]*model.Team, error) {
 }
 
 // Players is the resolver for the players field.
-func (r *queryResolver) Players(ctx context.Context) ([]*model.Player, error) {
+func (r *queryResolver) Players(ctx context.Context, teamShortName *string) ([]*model.Player, error) {
 	var response []*model.Player
 	for _, player := range db.Data.Players {
+		if teamShortName != nil {
+			if !strings.EqualFold(player.TeamShortName, *teamShortName) {
+				continue
+			}
+		}
 		response = append(response, toPlayerGraph(player))
 	}
 	return response, nil
@@ -50,7 +55,7 @@ func (r *queryResolver) Team(ctx context.Context, shortName string) (*model.Team
 
 // Player is the resolver for the player field.
 func (r *queryResolver) Player(ctx context.Context, webName string) (*model.Player, error) {
-	var key = strings.ToLower(webName)
+	key := strings.ToLower(webName)
 	var data = db.Data.Players[key]
 	var response = toPlayerGraph(data)
 	return response, nil

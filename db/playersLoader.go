@@ -18,6 +18,7 @@ func loadPlayers(fplPlayers []*fpl.Player, teamIndex map[int]*Team, elementTypes
 			News:                             player.News,
 			NewsAdded:                        player.NewsAdded.Format("2006-01-02"),
 			Team:                             teamIndex[player.Team].Name,
+			TeamShortName:                    teamIndex[player.Team].ShortName,
 			Position:                         elementTypes[player.ElementType].SingularNameShort,
 			ChanceOfPlayingNextRound:         player.ChanceOfPlayingNextRound,
 			ChanceOfPlayingThisRound:         player.ChanceOfPlayingThisRound,

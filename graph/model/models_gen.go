@@ -13,6 +13,7 @@ type ChipPlay struct {
 	NumPlayed int    `json:"numPlayed"`
 }
 
+// Information about a Gameweek including all fixtures.
 type Event struct {
 	ID                     int             `json:"id"`
 	Name                   string          `json:"name"`
@@ -65,6 +66,7 @@ type Fixture struct {
 	TeamHPulseID         *int    `json:"teamHPulseId,omitempty"`
 }
 
+// Information a Gameweek between Team Home and Team Away by kickoff datetime.
 type Gameweek struct {
 	Kickoff    string `json:"Kickoff"`
 	TeamAName  string `json:"TeamAName"`
@@ -75,9 +77,12 @@ type Gameweek struct {
 }
 
 type H2h struct {
+	// Stats of Team Away. Example: accurate_back_zone_pass, accurate_long_balls, aerial_won, defender_goals, etc.
 	StatsTeamA []*StatsTeam `json:"StatsTeamA,omitempty"`
+	// Stats of Team Home. Example: accurate_back_zone_pass, accurate_long_balls, aerial_won, defender_goals, etc.
 	StatsTeamH []*StatsTeam `json:"StatsTeamH,omitempty"`
-	Gameweeks  []*Gameweek  `json:"Gameweeks,omitempty"`
+	// Information about preview Gameweeks between Team Home and Team Away.
+	Gameweeks []*Gameweek `json:"Gameweeks,omitempty"`
 }
 
 type Player struct {

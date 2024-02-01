@@ -219,7 +219,7 @@ type Player {
 
 type Query {
   teams: [Team]
-  players: [Player]
+  players(teamShortName:String): [Player]
   events: [Event]
   team(shortName:String!): Team
   player(webName:String!): Player
