@@ -1,6 +1,6 @@
 #  Anfield API
 
-This project is a GraphQL API written in Golang hosted by Vercel to access to the Fantasy Premier League **public** information. The motivation of this project is to provide a simple, single and easy way to access to the Fantasy Premier League data, rather than using multiple endpoints separately.
+This project introduces a GraphQL API, developed using Golang and hosted on Vercel, designed to streamline access to **public** information from the Fantasy Premier League. Its primary objective is to offer a simplified, unified, and user-friendly method for retrieving Fantasy Premier League data, eliminating the need to interact with multiple separate endpoints.
 
 ## Endpoints
 
