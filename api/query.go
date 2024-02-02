@@ -7,8 +7,6 @@ import (
 	"github.com/margostino/anfield-api/auth"
 	"github.com/margostino/anfield-api/graph"
 	"github.com/margostino/anfield-api/metrics"
-	// "github.com/margostino/anfield-api/graph/generated"
-	// "github.com/margostino/anfield-api/metrics"
 )
 
 var server = newServer()
