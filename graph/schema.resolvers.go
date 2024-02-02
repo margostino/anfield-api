@@ -38,9 +38,21 @@ func (r *queryResolver) Players(ctx context.Context, teamShortName *string) ([]*
 }
 
 // Events is the resolver for the events field.
-func (r *queryResolver) Events(ctx context.Context) ([]*model.Event, error) {
+func (r *queryResolver) Events(ctx context.Context, teamShortName *string) ([]*model.Event, error) {
 	var response []*model.Event
 	for _, event := range db.Data.Events {
+		if teamShortName != nil {
+			var fixtures []*db.Fixture
+			for _, fixture := range event.Fixtures {
+				if strings.EqualFold(*fixture.TeamAShortName, *teamShortName) || strings.EqualFold(*fixture.TeamHShortName, *teamShortName) {
+					fixtures = append(fixtures, fixture)
+				}
+			}
+			if len(fixtures) == 0 {
+				continue
+			}
+			event.Fixtures = fixtures
+		}
 		response = append(response, toEventGraph(event))
 	}
 	sort.Slice(response, func(i, j int) bool { return response[i].ID < response[j].ID })
@@ -64,9 +76,23 @@ func (r *queryResolver) Player(ctx context.Context, webName string) (*model.Play
 }
 
 // Event is the resolver for the event field.
-func (r *queryResolver) Event(ctx context.Context, id int) (*model.Event, error) {
+func (r *queryResolver) Event(ctx context.Context, id int, teamShortName *string) (*model.Event, error) {
 	var data = db.Data.Events[id]
+
+	if teamShortName != nil {
+		var fixtures []*db.Fixture
+		for _, fixture := range data.Fixtures {
+			if strings.EqualFold(*fixture.TeamAShortName, *teamShortName) || strings.EqualFold(*fixture.TeamHShortName, *teamShortName) {
+				fixtures = append(fixtures, fixture)
+			}
+		}
+		if len(fixtures) > 0 {
+			data.Fixtures = fixtures
+		}
+	}
+
 	var response = toEventGraph(data)
+
 	return response, nil
 }
 

@@ -69,9 +69,11 @@ type Fixture {
   started: Boolean  # Indicates if the fixture has started.
   teamA: Int  # Identifier for Team Away.
   teamAName: String  # Name of Team Away.
+  teamAShortName: String # Team Away short name
   teamAScore: Int  # Score of Team Away.
   teamH: Int  # Identifier for Team Home.
   teamHName: String  # Name of Team Home.
+  teamHShortName: String # Team Home short name
   teamHScore: Int  # Score of Team Home.
   stats: [Stat]  # Collection of statistics for the fixture.
   teamHDifficulty: Int  # Difficulty rating for Team Home.
@@ -245,9 +247,9 @@ Root type for all queries in the schema, providing entry points to fetch data ab
 type Query {
   teams: [Team]  # Fetches a list of all teams.
   players(teamShortName:String): [Player]  # Fetches a list of players filtered by team short name.
-  events: [Event]  # Fetches a list of all events or Gameweeks.
+  events(teamShortName:String): [Event]  # Fetches a list of all gameweeks filtered by team short name.
   team(shortName:String!): Team  # Fetches a specific team by its short name.
   player(webName:String!): Player  # Fetches a specific player by their web name.
-  event(id:Int!): Event  # Fetches a specific event or Gameweek by its ID.
+  event(id:Int!, teamShortName:String): Event  # Fetches a specific event or Gameweek by its ID.
   h2h(teamAShortName:String!, teamHShortName:String!): H2H  # Fetches head-to-head information between two specified teams.
 }

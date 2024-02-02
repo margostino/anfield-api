@@ -96,11 +96,13 @@ type ComplexityRoot struct {
 		TeamAName            func(childComplexity int) int
 		TeamAPulseID         func(childComplexity int) int
 		TeamAScore           func(childComplexity int) int
+		TeamAShortName       func(childComplexity int) int
 		TeamH                func(childComplexity int) int
 		TeamHDifficulty      func(childComplexity int) int
 		TeamHName            func(childComplexity int) int
 		TeamHPulseID         func(childComplexity int) int
 		TeamHScore           func(childComplexity int) int
+		TeamHShortName       func(childComplexity int) int
 	}
 
 	Gameweek struct {
@@ -210,8 +212,8 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Event   func(childComplexity int, id int) int
-		Events  func(childComplexity int) int
+		Event   func(childComplexity int, id int, teamShortName *string) int
+		Events  func(childComplexity int, teamShortName *string) int
 		H2h     func(childComplexity int, teamAShortName string, teamHShortName string) int
 		Player  func(childComplexity int, webName string) int
 		Players func(childComplexity int, teamShortName *string) int
@@ -258,10 +260,10 @@ type ComplexityRoot struct {
 type QueryResolver interface {
 	Teams(ctx context.Context) ([]*model.Team, error)
 	Players(ctx context.Context, teamShortName *string) ([]*model.Player, error)
-	Events(ctx context.Context) ([]*model.Event, error)
+	Events(ctx context.Context, teamShortName *string) ([]*model.Event, error)
 	Team(ctx context.Context, shortName string) (*model.Team, error)
 	Player(ctx context.Context, webName string) (*model.Player, error)
-	Event(ctx context.Context, id int) (*model.Event, error)
+	Event(ctx context.Context, id int, teamShortName *string) (*model.Event, error)
 	H2h(ctx context.Context, teamAShortName string, teamHShortName string) (*model.H2h, error)
 }
 
@@ -585,6 +587,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Fixture.TeamAScore(childComplexity), true
 
+	case "Fixture.teamAShortName":
+		if e.complexity.Fixture.TeamAShortName == nil {
+			break
+		}
+
+		return e.complexity.Fixture.TeamAShortName(childComplexity), true
+
 	case "Fixture.teamH":
 		if e.complexity.Fixture.TeamH == nil {
 			break
@@ -619,6 +628,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Fixture.TeamHScore(childComplexity), true
+
+	case "Fixture.teamHShortName":
+		if e.complexity.Fixture.TeamHShortName == nil {
+			break
+		}
+
+		return e.complexity.Fixture.TeamHShortName(childComplexity), true
 
 	case "Gameweek.kickoff":
 		if e.complexity.Gameweek.Kickoff == nil {
@@ -1309,14 +1325,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Event(childComplexity, args["id"].(int)), true
+		return e.complexity.Query.Event(childComplexity, args["id"].(int), args["teamShortName"].(*string)), true
 
 	case "Query.events":
 		if e.complexity.Query.Events == nil {
 			break
 		}
 
-		return e.complexity.Query.Events(childComplexity), true
+		args, err := ec.field_Query_events_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.Events(childComplexity, args["teamShortName"].(*string)), true
 
 	case "Query.h2h":
 		if e.complexity.Query.H2h == nil {
@@ -1648,6 +1669,30 @@ func (ec *executionContext) field_Query_event_args(ctx context.Context, rawArgs 
 		}
 	}
 	args["id"] = arg0
+	var arg1 *string
+	if tmp, ok := rawArgs["teamShortName"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("teamShortName"))
+		arg1, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["teamShortName"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_events_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *string
+	if tmp, ok := rawArgs["teamShortName"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("teamShortName"))
+		arg0, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["teamShortName"] = arg0
 	return args, nil
 }
 
@@ -2975,12 +3020,16 @@ func (ec *executionContext) fieldContext_Event_fixtures(ctx context.Context, fie
 				return ec.fieldContext_Fixture_teamA(ctx, field)
 			case "teamAName":
 				return ec.fieldContext_Fixture_teamAName(ctx, field)
+			case "teamAShortName":
+				return ec.fieldContext_Fixture_teamAShortName(ctx, field)
 			case "teamAScore":
 				return ec.fieldContext_Fixture_teamAScore(ctx, field)
 			case "teamH":
 				return ec.fieldContext_Fixture_teamH(ctx, field)
 			case "teamHName":
 				return ec.fieldContext_Fixture_teamHName(ctx, field)
+			case "teamHShortName":
+				return ec.fieldContext_Fixture_teamHShortName(ctx, field)
 			case "teamHScore":
 				return ec.fieldContext_Fixture_teamHScore(ctx, field)
 			case "stats":
@@ -3459,6 +3508,47 @@ func (ec *executionContext) fieldContext_Fixture_teamAName(ctx context.Context, 
 	return fc, nil
 }
 
+func (ec *executionContext) _Fixture_teamAShortName(ctx context.Context, field graphql.CollectedField, obj *model.Fixture) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Fixture_teamAShortName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TeamAShortName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Fixture_teamAShortName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Fixture",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Fixture_teamAScore(ctx context.Context, field graphql.CollectedField, obj *model.Fixture) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Fixture_teamAScore(ctx, field)
 	if err != nil {
@@ -3570,6 +3660,47 @@ func (ec *executionContext) _Fixture_teamHName(ctx context.Context, field graphq
 }
 
 func (ec *executionContext) fieldContext_Fixture_teamHName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Fixture",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Fixture_teamHShortName(ctx context.Context, field graphql.CollectedField, obj *model.Fixture) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Fixture_teamHShortName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TeamHShortName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Fixture_teamHShortName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Fixture",
 		Field:      field,
@@ -8473,7 +8604,7 @@ func (ec *executionContext) _Query_events(ctx context.Context, field graphql.Col
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Events(rctx)
+		return ec.resolvers.Query().Events(rctx, fc.Args["teamShortName"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8548,6 +8679,17 @@ func (ec *executionContext) fieldContext_Query_events(ctx context.Context, field
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Event", field.Name)
 		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_events_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
 	}
 	return fc, nil
 }
@@ -8870,7 +9012,7 @@ func (ec *executionContext) _Query_event(ctx context.Context, field graphql.Coll
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Event(rctx, fc.Args["id"].(int))
+		return ec.resolvers.Query().Event(rctx, fc.Args["id"].(int), fc.Args["teamShortName"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -12049,12 +12191,16 @@ func (ec *executionContext) _Fixture(ctx context.Context, sel ast.SelectionSet, 
 			out.Values[i] = ec._Fixture_teamA(ctx, field, obj)
 		case "teamAName":
 			out.Values[i] = ec._Fixture_teamAName(ctx, field, obj)
+		case "teamAShortName":
+			out.Values[i] = ec._Fixture_teamAShortName(ctx, field, obj)
 		case "teamAScore":
 			out.Values[i] = ec._Fixture_teamAScore(ctx, field, obj)
 		case "teamH":
 			out.Values[i] = ec._Fixture_teamH(ctx, field, obj)
 		case "teamHName":
 			out.Values[i] = ec._Fixture_teamHName(ctx, field, obj)
+		case "teamHShortName":
+			out.Values[i] = ec._Fixture_teamHShortName(ctx, field, obj)
 		case "teamHScore":
 			out.Values[i] = ec._Fixture_teamHScore(ctx, field, obj)
 		case "stats":

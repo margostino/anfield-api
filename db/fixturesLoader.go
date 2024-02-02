@@ -47,6 +47,8 @@ func loadFixtures(fplFixturesResponse fpl.FixturesResponse, teamIndex map[int]*T
 				TeamA:                fixture.TeamA,
 				TeamAName:            &teamIndex[*fixture.TeamA].Name,
 				TeamHName:            &teamIndex[*fixture.TeamH].Name,
+				TeamAShortName:       &teamIndex[*fixture.TeamA].ShortName,
+				TeamHShortName:       &teamIndex[*fixture.TeamH].ShortName,
 				TeamAScore:           fixture.TeamAScore,
 				TeamH:                fixture.TeamH,
 				TeamHScore:           fixture.TeamHScore,

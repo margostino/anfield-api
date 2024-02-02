@@ -56,9 +56,11 @@ type Fixture struct {
 	Started              *bool   `json:"started,omitempty"`
 	TeamA                *int    `json:"teamA,omitempty"`
 	TeamAName            *string `json:"teamAName,omitempty"`
+	TeamAShortName       *string `json:"teamAShortName,omitempty"`
 	TeamAScore           *int    `json:"teamAScore,omitempty"`
 	TeamH                *int    `json:"teamH,omitempty"`
 	TeamHName            *string `json:"teamHName,omitempty"`
+	TeamHShortName       *string `json:"teamHShortName,omitempty"`
 	TeamHScore           *int    `json:"teamHScore,omitempty"`
 	Stats                []*Stat `json:"stats,omitempty"`
 	TeamHDifficulty      *int    `json:"teamHDifficulty,omitempty"`
