@@ -620,63 +620,63 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Fixture.TeamHScore(childComplexity), true
 
-	case "Gameweek.Kickoff":
+	case "Gameweek.kickoff":
 		if e.complexity.Gameweek.Kickoff == nil {
 			break
 		}
 
 		return e.complexity.Gameweek.Kickoff(childComplexity), true
 
-	case "Gameweek.ScoreTeamA":
+	case "Gameweek.scoreTeamA":
 		if e.complexity.Gameweek.ScoreTeamA == nil {
 			break
 		}
 
 		return e.complexity.Gameweek.ScoreTeamA(childComplexity), true
 
-	case "Gameweek.ScoreTeamH":
+	case "Gameweek.scoreTeamH":
 		if e.complexity.Gameweek.ScoreTeamH == nil {
 			break
 		}
 
 		return e.complexity.Gameweek.ScoreTeamH(childComplexity), true
 
-	case "Gameweek.Stadium":
+	case "Gameweek.stadium":
 		if e.complexity.Gameweek.Stadium == nil {
 			break
 		}
 
 		return e.complexity.Gameweek.Stadium(childComplexity), true
 
-	case "Gameweek.TeamAName":
+	case "Gameweek.teamAName":
 		if e.complexity.Gameweek.TeamAName == nil {
 			break
 		}
 
 		return e.complexity.Gameweek.TeamAName(childComplexity), true
 
-	case "Gameweek.TeamHName":
+	case "Gameweek.teamHName":
 		if e.complexity.Gameweek.TeamHName == nil {
 			break
 		}
 
 		return e.complexity.Gameweek.TeamHName(childComplexity), true
 
-	case "H2H.Gameweeks":
+	case "H2H.gameweeks":
 		if e.complexity.H2H.Gameweeks == nil {
 			break
 		}
 
 		return e.complexity.H2H.Gameweeks(childComplexity), true
 
-	case "H2H.StatsTeamA":
+	case "H2H.statsTeamA":
 		if e.complexity.H2H.StatsTeamA == nil {
 			break
 		}
 
 		return e.complexity.H2H.StatsTeamA(childComplexity), true
 
-	case "H2H.StatsTeamH":
+	case "H2H.statsTeamH":
 		if e.complexity.H2H.StatsTeamH == nil {
 			break
 		}
@@ -1394,21 +1394,21 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Stat.TeamH(childComplexity), true
 
-	case "StatsTeam.Description":
+	case "StatsTeam.description":
 		if e.complexity.StatsTeam.Description == nil {
 			break
 		}
 
 		return e.complexity.StatsTeam.Description(childComplexity), true
 
-	case "StatsTeam.Name":
+	case "StatsTeam.name":
 		if e.complexity.StatsTeam.Name == nil {
 			break
 		}
 
 		return e.complexity.StatsTeam.Name(childComplexity), true
 
-	case "StatsTeam.Value":
+	case "StatsTeam.value":
 		if e.complexity.StatsTeam.Value == nil {
 			break
 		}
@@ -3877,8 +3877,8 @@ func (ec *executionContext) fieldContext_Fixture_teamHPulseId(ctx context.Contex
 	return fc, nil
 }
 
-func (ec *executionContext) _Gameweek_Kickoff(ctx context.Context, field graphql.CollectedField, obj *model.Gameweek) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Gameweek_Kickoff(ctx, field)
+func (ec *executionContext) _Gameweek_kickoff(ctx context.Context, field graphql.CollectedField, obj *model.Gameweek) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Gameweek_kickoff(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -3908,7 +3908,7 @@ func (ec *executionContext) _Gameweek_Kickoff(ctx context.Context, field graphql
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Gameweek_Kickoff(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Gameweek_kickoff(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Gameweek",
 		Field:      field,
@@ -3921,8 +3921,8 @@ func (ec *executionContext) fieldContext_Gameweek_Kickoff(ctx context.Context, f
 	return fc, nil
 }
 
-func (ec *executionContext) _Gameweek_TeamAName(ctx context.Context, field graphql.CollectedField, obj *model.Gameweek) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Gameweek_TeamAName(ctx, field)
+func (ec *executionContext) _Gameweek_teamAName(ctx context.Context, field graphql.CollectedField, obj *model.Gameweek) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Gameweek_teamAName(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -3952,7 +3952,7 @@ func (ec *executionContext) _Gameweek_TeamAName(ctx context.Context, field graph
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Gameweek_TeamAName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Gameweek_teamAName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Gameweek",
 		Field:      field,
@@ -3965,8 +3965,8 @@ func (ec *executionContext) fieldContext_Gameweek_TeamAName(ctx context.Context,
 	return fc, nil
 }
 
-func (ec *executionContext) _Gameweek_ScoreTeamA(ctx context.Context, field graphql.CollectedField, obj *model.Gameweek) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Gameweek_ScoreTeamA(ctx, field)
+func (ec *executionContext) _Gameweek_scoreTeamA(ctx context.Context, field graphql.CollectedField, obj *model.Gameweek) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Gameweek_scoreTeamA(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -3996,7 +3996,7 @@ func (ec *executionContext) _Gameweek_ScoreTeamA(ctx context.Context, field grap
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Gameweek_ScoreTeamA(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Gameweek_scoreTeamA(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Gameweek",
 		Field:      field,
@@ -4009,8 +4009,8 @@ func (ec *executionContext) fieldContext_Gameweek_ScoreTeamA(ctx context.Context
 	return fc, nil
 }
 
-func (ec *executionContext) _Gameweek_TeamHName(ctx context.Context, field graphql.CollectedField, obj *model.Gameweek) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Gameweek_TeamHName(ctx, field)
+func (ec *executionContext) _Gameweek_teamHName(ctx context.Context, field graphql.CollectedField, obj *model.Gameweek) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Gameweek_teamHName(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -4040,7 +4040,7 @@ func (ec *executionContext) _Gameweek_TeamHName(ctx context.Context, field graph
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Gameweek_TeamHName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Gameweek_teamHName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Gameweek",
 		Field:      field,
@@ -4053,8 +4053,8 @@ func (ec *executionContext) fieldContext_Gameweek_TeamHName(ctx context.Context,
 	return fc, nil
 }
 
-func (ec *executionContext) _Gameweek_ScoreTeamH(ctx context.Context, field graphql.CollectedField, obj *model.Gameweek) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Gameweek_ScoreTeamH(ctx, field)
+func (ec *executionContext) _Gameweek_scoreTeamH(ctx context.Context, field graphql.CollectedField, obj *model.Gameweek) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Gameweek_scoreTeamH(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -4084,7 +4084,7 @@ func (ec *executionContext) _Gameweek_ScoreTeamH(ctx context.Context, field grap
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Gameweek_ScoreTeamH(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Gameweek_scoreTeamH(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Gameweek",
 		Field:      field,
@@ -4097,8 +4097,8 @@ func (ec *executionContext) fieldContext_Gameweek_ScoreTeamH(ctx context.Context
 	return fc, nil
 }
 
-func (ec *executionContext) _Gameweek_Stadium(ctx context.Context, field graphql.CollectedField, obj *model.Gameweek) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Gameweek_Stadium(ctx, field)
+func (ec *executionContext) _Gameweek_stadium(ctx context.Context, field graphql.CollectedField, obj *model.Gameweek) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Gameweek_stadium(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -4128,7 +4128,7 @@ func (ec *executionContext) _Gameweek_Stadium(ctx context.Context, field graphql
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Gameweek_Stadium(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Gameweek_stadium(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Gameweek",
 		Field:      field,
@@ -4141,8 +4141,8 @@ func (ec *executionContext) fieldContext_Gameweek_Stadium(ctx context.Context, f
 	return fc, nil
 }
 
-func (ec *executionContext) _H2H_StatsTeamA(ctx context.Context, field graphql.CollectedField, obj *model.H2h) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_H2H_StatsTeamA(ctx, field)
+func (ec *executionContext) _H2H_statsTeamA(ctx context.Context, field graphql.CollectedField, obj *model.H2h) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_H2H_statsTeamA(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -4169,7 +4169,7 @@ func (ec *executionContext) _H2H_StatsTeamA(ctx context.Context, field graphql.C
 	return ec.marshalOStatsTeam2ᚕᚖgithubᚗcomᚋmargostinoᚋanfieldᚑapiᚋgraphᚋmodelᚐStatsTeam(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_H2H_StatsTeamA(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_H2H_statsTeamA(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "H2H",
 		Field:      field,
@@ -4177,12 +4177,12 @@ func (ec *executionContext) fieldContext_H2H_StatsTeamA(ctx context.Context, fie
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "Name":
-				return ec.fieldContext_StatsTeam_Name(ctx, field)
-			case "Value":
-				return ec.fieldContext_StatsTeam_Value(ctx, field)
-			case "Description":
-				return ec.fieldContext_StatsTeam_Description(ctx, field)
+			case "name":
+				return ec.fieldContext_StatsTeam_name(ctx, field)
+			case "value":
+				return ec.fieldContext_StatsTeam_value(ctx, field)
+			case "description":
+				return ec.fieldContext_StatsTeam_description(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type StatsTeam", field.Name)
 		},
@@ -4190,8 +4190,8 @@ func (ec *executionContext) fieldContext_H2H_StatsTeamA(ctx context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _H2H_StatsTeamH(ctx context.Context, field graphql.CollectedField, obj *model.H2h) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_H2H_StatsTeamH(ctx, field)
+func (ec *executionContext) _H2H_statsTeamH(ctx context.Context, field graphql.CollectedField, obj *model.H2h) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_H2H_statsTeamH(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -4218,7 +4218,7 @@ func (ec *executionContext) _H2H_StatsTeamH(ctx context.Context, field graphql.C
 	return ec.marshalOStatsTeam2ᚕᚖgithubᚗcomᚋmargostinoᚋanfieldᚑapiᚋgraphᚋmodelᚐStatsTeam(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_H2H_StatsTeamH(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_H2H_statsTeamH(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "H2H",
 		Field:      field,
@@ -4226,12 +4226,12 @@ func (ec *executionContext) fieldContext_H2H_StatsTeamH(ctx context.Context, fie
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "Name":
-				return ec.fieldContext_StatsTeam_Name(ctx, field)
-			case "Value":
-				return ec.fieldContext_StatsTeam_Value(ctx, field)
-			case "Description":
-				return ec.fieldContext_StatsTeam_Description(ctx, field)
+			case "name":
+				return ec.fieldContext_StatsTeam_name(ctx, field)
+			case "value":
+				return ec.fieldContext_StatsTeam_value(ctx, field)
+			case "description":
+				return ec.fieldContext_StatsTeam_description(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type StatsTeam", field.Name)
 		},
@@ -4239,8 +4239,8 @@ func (ec *executionContext) fieldContext_H2H_StatsTeamH(ctx context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _H2H_Gameweeks(ctx context.Context, field graphql.CollectedField, obj *model.H2h) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_H2H_Gameweeks(ctx, field)
+func (ec *executionContext) _H2H_gameweeks(ctx context.Context, field graphql.CollectedField, obj *model.H2h) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_H2H_gameweeks(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -4267,7 +4267,7 @@ func (ec *executionContext) _H2H_Gameweeks(ctx context.Context, field graphql.Co
 	return ec.marshalOGameweek2ᚕᚖgithubᚗcomᚋmargostinoᚋanfieldᚑapiᚋgraphᚋmodelᚐGameweek(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_H2H_Gameweeks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_H2H_gameweeks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "H2H",
 		Field:      field,
@@ -4275,18 +4275,18 @@ func (ec *executionContext) fieldContext_H2H_Gameweeks(ctx context.Context, fiel
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "Kickoff":
-				return ec.fieldContext_Gameweek_Kickoff(ctx, field)
-			case "TeamAName":
-				return ec.fieldContext_Gameweek_TeamAName(ctx, field)
-			case "ScoreTeamA":
-				return ec.fieldContext_Gameweek_ScoreTeamA(ctx, field)
-			case "TeamHName":
-				return ec.fieldContext_Gameweek_TeamHName(ctx, field)
-			case "ScoreTeamH":
-				return ec.fieldContext_Gameweek_ScoreTeamH(ctx, field)
-			case "Stadium":
-				return ec.fieldContext_Gameweek_Stadium(ctx, field)
+			case "kickoff":
+				return ec.fieldContext_Gameweek_kickoff(ctx, field)
+			case "teamAName":
+				return ec.fieldContext_Gameweek_teamAName(ctx, field)
+			case "scoreTeamA":
+				return ec.fieldContext_Gameweek_scoreTeamA(ctx, field)
+			case "teamHName":
+				return ec.fieldContext_Gameweek_teamHName(ctx, field)
+			case "scoreTeamH":
+				return ec.fieldContext_Gameweek_scoreTeamH(ctx, field)
+			case "stadium":
+				return ec.fieldContext_Gameweek_stadium(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Gameweek", field.Name)
 		},
@@ -8996,12 +8996,12 @@ func (ec *executionContext) fieldContext_Query_h2h(ctx context.Context, field gr
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "StatsTeamA":
-				return ec.fieldContext_H2H_StatsTeamA(ctx, field)
-			case "StatsTeamH":
-				return ec.fieldContext_H2H_StatsTeamH(ctx, field)
-			case "Gameweeks":
-				return ec.fieldContext_H2H_Gameweeks(ctx, field)
+			case "statsTeamA":
+				return ec.fieldContext_H2H_statsTeamA(ctx, field)
+			case "statsTeamH":
+				return ec.fieldContext_H2H_statsTeamH(ctx, field)
+			case "gameweeks":
+				return ec.fieldContext_H2H_gameweeks(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type H2H", field.Name)
 		},
@@ -9284,8 +9284,8 @@ func (ec *executionContext) fieldContext_Stat_teamH(ctx context.Context, field g
 	return fc, nil
 }
 
-func (ec *executionContext) _StatsTeam_Name(ctx context.Context, field graphql.CollectedField, obj *model.StatsTeam) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_StatsTeam_Name(ctx, field)
+func (ec *executionContext) _StatsTeam_name(ctx context.Context, field graphql.CollectedField, obj *model.StatsTeam) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_StatsTeam_name(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -9315,7 +9315,7 @@ func (ec *executionContext) _StatsTeam_Name(ctx context.Context, field graphql.C
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_StatsTeam_Name(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_StatsTeam_name(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "StatsTeam",
 		Field:      field,
@@ -9328,8 +9328,8 @@ func (ec *executionContext) fieldContext_StatsTeam_Name(ctx context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _StatsTeam_Value(ctx context.Context, field graphql.CollectedField, obj *model.StatsTeam) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_StatsTeam_Value(ctx, field)
+func (ec *executionContext) _StatsTeam_value(ctx context.Context, field graphql.CollectedField, obj *model.StatsTeam) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_StatsTeam_value(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -9359,7 +9359,7 @@ func (ec *executionContext) _StatsTeam_Value(ctx context.Context, field graphql.
 	return ec.marshalNFloat2float64(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_StatsTeam_Value(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_StatsTeam_value(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "StatsTeam",
 		Field:      field,
@@ -9372,8 +9372,8 @@ func (ec *executionContext) fieldContext_StatsTeam_Value(ctx context.Context, fi
 	return fc, nil
 }
 
-func (ec *executionContext) _StatsTeam_Description(ctx context.Context, field graphql.CollectedField, obj *model.StatsTeam) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_StatsTeam_Description(ctx, field)
+func (ec *executionContext) _StatsTeam_description(ctx context.Context, field graphql.CollectedField, obj *model.StatsTeam) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_StatsTeam_description(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -9403,7 +9403,7 @@ func (ec *executionContext) _StatsTeam_Description(ctx context.Context, field gr
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_StatsTeam_Description(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_StatsTeam_description(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "StatsTeam",
 		Field:      field,
@@ -12103,33 +12103,33 @@ func (ec *executionContext) _Gameweek(ctx context.Context, sel ast.SelectionSet,
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Gameweek")
-		case "Kickoff":
-			out.Values[i] = ec._Gameweek_Kickoff(ctx, field, obj)
+		case "kickoff":
+			out.Values[i] = ec._Gameweek_kickoff(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "TeamAName":
-			out.Values[i] = ec._Gameweek_TeamAName(ctx, field, obj)
+		case "teamAName":
+			out.Values[i] = ec._Gameweek_teamAName(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "ScoreTeamA":
-			out.Values[i] = ec._Gameweek_ScoreTeamA(ctx, field, obj)
+		case "scoreTeamA":
+			out.Values[i] = ec._Gameweek_scoreTeamA(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "TeamHName":
-			out.Values[i] = ec._Gameweek_TeamHName(ctx, field, obj)
+		case "teamHName":
+			out.Values[i] = ec._Gameweek_teamHName(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "ScoreTeamH":
-			out.Values[i] = ec._Gameweek_ScoreTeamH(ctx, field, obj)
+		case "scoreTeamH":
+			out.Values[i] = ec._Gameweek_scoreTeamH(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "Stadium":
-			out.Values[i] = ec._Gameweek_Stadium(ctx, field, obj)
+		case "stadium":
+			out.Values[i] = ec._Gameweek_stadium(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -12167,12 +12167,12 @@ func (ec *executionContext) _H2H(ctx context.Context, sel ast.SelectionSet, obj 
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("H2H")
-		case "StatsTeamA":
-			out.Values[i] = ec._H2H_StatsTeamA(ctx, field, obj)
-		case "StatsTeamH":
-			out.Values[i] = ec._H2H_StatsTeamH(ctx, field, obj)
-		case "Gameweeks":
-			out.Values[i] = ec._H2H_Gameweeks(ctx, field, obj)
+		case "statsTeamA":
+			out.Values[i] = ec._H2H_statsTeamA(ctx, field, obj)
+		case "statsTeamH":
+			out.Values[i] = ec._H2H_statsTeamH(ctx, field, obj)
+		case "gameweeks":
+			out.Values[i] = ec._H2H_gameweeks(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -12904,18 +12904,18 @@ func (ec *executionContext) _StatsTeam(ctx context.Context, sel ast.SelectionSet
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("StatsTeam")
-		case "Name":
-			out.Values[i] = ec._StatsTeam_Name(ctx, field, obj)
+		case "name":
+			out.Values[i] = ec._StatsTeam_name(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "Value":
-			out.Values[i] = ec._StatsTeam_Value(ctx, field, obj)
+		case "value":
+			out.Values[i] = ec._StatsTeam_value(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "Description":
-			out.Values[i] = ec._StatsTeam_Description(ctx, field, obj)
+		case "description":
+			out.Values[i] = ec._StatsTeam_description(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}

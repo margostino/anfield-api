@@ -1,229 +1,253 @@
+"""
+Enumeration for player positions in a football game.
+"""
 enum PlayerPosition {
-  GKP
-  DEF
-  MID
-  FWD
-}
-
-type ChipPlay {
-  chipName: String!
-  numPlayed: Int!
-}
-type TopElementInfo {
-  id: Int!
-  points: Int!
-}
-
-type StatsTeam {
-  Name: String!
-  Value: Float!
-  Description: String!
+  GKP  # Goalkeeper
+  DEF  # Defender
+  MID  # Midfielder
+  FWD  # Forward
 }
 
 """
-  Information a Gameweek between Team Home and Team Away by kickoff datetime.
+Represents the usage of a game strategy or special play, known as a 'chip'.
+"""
+type ChipPlay {
+  chipName: String!  # The name of the chip.
+  numPlayed: Int!  # The number of times the chip has been played.
+}
+
+"""
+Detailed information about a top-performing element (player or team) in a particular context.
+"""
+type TopElementInfo {
+  id: Int!  # Unique identifier for the element.
+  points: Int!  # Points scored by the element.
+}
+
+"""
+Statistics of a football team including its name, value, and a description.
+"""
+type StatsTeam {
+  name: String!  # The name of the team.
+  value: Float!  # The monetary value or worth of the team.
+  description: String!  # A brief description of the team.
+}
+
+"""
+Information about a specific Gameweek including matchups between teams, scores, and location.
 """
 type Gameweek {
-  Kickoff: String!
-  TeamAName: String!
-  ScoreTeamA: Int!
-  TeamHName: String!
-  ScoreTeamH: Int!
-  Stadium: String!
-}
-
-type H2H {
-  """
-    Stats of Team Away. Example: accurate_back_zone_pass, accurate_long_balls, aerial_won, defender_goals, etc.
-  """
-  StatsTeamA: [StatsTeam]
-  """
-    Stats of Team Home. Example: accurate_back_zone_pass, accurate_long_balls, aerial_won, defender_goals, etc.
-  """  
-  StatsTeamH: [StatsTeam]
-  """
-    Information about preview Gameweeks between Team Home and Team Away.
-  """
-  Gameweeks: [Gameweek]
-}
-
-type Fixture {
-  code: Int!
-  event: Int
-  finished: Boolean
-  finishedProvisional: Boolean
-  id: Int!
-  kickoffTime: String
-  minutes: Int
-  provisionalStartTime: Boolean
-  started: Boolean
-  teamA: Int
-  teamAName: String
-  teamAScore: Int
-  teamH: Int
-  teamHName: String
-  teamHScore: Int
-  stats: [Stat]
-  teamHDifficulty: Int
-  teamADifficulty: Int
-  pulseId: Int
-  teamAPulseId: Int
-  teamHPulseId: Int
-}
-
-type Stat {
-  identifier: String
-  teamA: [TeamStat]
-  teamH: [TeamStat]
-}
-
-type TeamStat {
-  value: Int
-  element: Int
+  kickoff: String!  # The start time of the game.
+  teamAName: String!  # The name of Team Away.
+  scoreTeamA: Int!  # The score of Team Away.
+  teamHName: String!  # The name of Team Home.
+  scoreTeamH: Int!  # The score of Team Home.
+  stadium: String!  # The stadium where the game is played.
 }
 
 """
-  Information about a Gameweek including all fixtures.
+Head-to-Head (H2H) statistics comparing two teams, including their previous matchups.
+"""
+type H2H {
+  statsTeamA: [StatsTeam]  # Statistics for Team Away.
+  statsTeamH: [StatsTeam]  # Statistics for Team Home.
+  gameweeks: [Gameweek]  # Past Gameweeks involving these two teams.
+}
+
+"""
+Details of a specific fixture in a football tournament including scores, times, and team information.
+"""
+type Fixture {
+  code: Int!  # Unique code for the fixture.
+  event: Int  # Event number associated with the fixture.
+  finished: Boolean  # Indicates if the fixture is finished.
+  finishedProvisional: Boolean  # Indicates if the fixture is provisionally finished.
+  id: Int!  # Unique identifier for the fixture.
+  kickoffTime: String  # The kickoff time of the fixture.
+  minutes: Int  # Duration of the fixture in minutes.
+  provisionalStartTime: Boolean  # Indicates if the start time of the fixture is provisional.
+  started: Boolean  # Indicates if the fixture has started.
+  teamA: Int  # Identifier for Team Away.
+  teamAName: String  # Name of Team Away.
+  teamAScore: Int  # Score of Team Away.
+  teamH: Int  # Identifier for Team Home.
+  teamHName: String  # Name of Team Home.
+  teamHScore: Int  # Score of Team Home.
+  stats: [Stat]  # Collection of statistics for the fixture.
+  teamHDifficulty: Int  # Difficulty rating for Team Home.
+  teamADifficulty: Int  # Difficulty rating for Team Away.
+  pulseId: Int  # Pulse ID for the fixture.
+  teamAPulseId: Int  # Pulse ID for Team Away.
+  teamHPulseId: Int  # Pulse ID for Team Home.
+}
+
+"""
+Statistical data for a team in a fixture, categorized by various metrics.
+"""
+type Stat {
+  identifier: String  # Identifier for the type of statistic.
+  teamA: [TeamStat]  # Statistics for Team Away.
+  teamH: [TeamStat]  # Statistics for Team Home.
+}
+
+"""
+Represents a single statistic for a team in a fixture.
+"""
+type TeamStat {
+  value: Int  # The value of the statistic.
+  element: Int  # The element (player or team) associated with the statistic.
+}
+
+"""
+Comprehensive information about a specific Gameweek including its fixtures and related data.
 """
 type Event {
-  id: Int!
-  name: String!
-  deadlineTime: String!
-  averageEntryScore: Int!
-  finished: Boolean!
-  dataChecked: Boolean!
-  highestScoringEntry: Int!
-  deadlineTimeEpoch: Int!
-  deadlineTimeGameOffset: Int!
-  highestScore: Int!
-  isPrevious: Boolean!
-  isCurrent: Boolean!
-  isNext: Boolean!
-  cupLeaguesCreated: Boolean!
-  h2hKoMatchesCreated: Boolean!
-  rankedCount: Int!
-  chipPlays: [ChipPlay!]!
-  mostSelected: Int!
-  mostTransferredIn: Int!
-  topElement: Int!
-  topElementInfo: TopElementInfo!
-  transfersMade: Int!
-  mostCaptained: Int!
-  mostViceCaptained: Int!
-  fixtures: [Fixture!]!
+  id: Int!  # Unique identifier for the Gameweek.
+  name: String!  # Name of the Gameweek.
+  deadlineTime: String!  # Deadline time for making changes related to this Gameweek.
+  averageEntryScore: Int!  # Average score of all entries in this Gameweek.
+  finished: Boolean!  # Indicates if the Gameweek is finished.
+  dataChecked: Boolean!  # Indicates if the data for this Gameweek has been checked and verified.
+  highestScoringEntry: Int!  # The highest-scoring entry in this Gameweek.
+  deadlineTimeEpoch: Int!  # Epoch time for the deadline of this Gameweek.
+  deadlineTimeGameOffset: Int!  # Time offset for the deadline relative to the game time.
+  highestScore: Int!  # The highest score achieved in this Gameweek.
+  isPrevious: Boolean!  # Indicates if this is the previous Gameweek.
+  isCurrent: Boolean!  # Indicates if this is the current Gameweek.
+  isNext: Boolean!  # Indicates if this is the next Gameweek.
+  cupLeaguesCreated: Boolean!  # Indicates if cup leagues have been created for this Gameweek.
+  h2hKoMatchesCreated: Boolean!  # Indicates if head-to-head knockout matches have been created for this Gameweek.
+  rankedCount: Int!  # The count of ranked entries in this Gameweek.
+  chipPlays: [ChipPlay!]!  # List of chip plays in this Gameweek.
+  mostSelected: Int!  # The most selected player or team in this Gameweek.
+  mostTransferredIn: Int!  # The player or team most transferred in for this Gameweek.
+  topElement: Int!  # The top-performing element in this Gameweek.
+  topElementInfo: TopElementInfo!  # Detailed info about the top element.
+  transfersMade: Int!  # Total number of transfers made in this Gameweek.
+  mostCaptained: Int!  # The most captained player or team in this Gameweek.
+  mostViceCaptained: Int!  # The most vice-captained player or team in this Gameweek.
+  fixtures: [Fixture!]!  # List of fixtures in this Gameweek.
 }
 
+"""
+Represents a football team with various attributes including strength and performance metrics.
+"""
 type Team {
-  id: Int!
-  name: String!
-  shortName: String!
-	strengthOverallHome: Int!,
-  strengthOverallAway: Int!,
-  strengthAttackHome: Int!,
-  strengthAttackAway: Int!,
-  strengthDefenceHome: Int!,
-  strengthDefenceAway: Int!,
-  pulseID: Int!
+  id: Int!  # Unique identifier for the team.
+  name: String!  # The name of the team.
+  shortName: String!  # The short name or abbreviation for the team.
+  strengthOverallHome: Int!,  # The team's overall strength at home matches.
+  strengthOverallAway: Int!,  # The team's overall strength at away matches.
+  strengthAttackHome: Int!,  # The team's attacking strength at home matches.
+  strengthAttackAway: Int!,  # The team's attacking strength at away matches.
+  strengthDefenceHome: Int!,  # The team's defensive strength at home matches.
+  strengthDefenceAway: Int!,  # The team's defensive strength at away matches.
+  pulseID: Int!  # Pulse ID associated with the team.
 }
 
+"""
+Represents a player in a football team, including detailed statistics and performance data.
+"""
 type Player {
-  id: Int!
-  firstName: String!
-  secondName: String!
-  webName: String!
-  news: String!
-  newsAdded: String!
-  team: String!
-  position: PlayerPosition!
-  chanceOfPlayingNextRound: Int!
-  chanceOfPlayingThisRound: Int!
-  costChangeEvent: Int!
-  costChangeEventFall: Int!
-  costChangeStart: Int!
-  costChangeStartFall: Int!
-  dreamteamCount: Int!
-  elementType: Int!
-  epNext: String!
-  epThis: String!
-  eventPoints: Int!
-  form: String!
-  inDreamteam: Boolean!
-  nowCost: Int!
-  photo: String!
-  pointsPerGame: String!
-  selectedByPercent: String!
-  special: Boolean!
-  squadNumber: Int!
-  status: String!
-  teamCode: Int!
-  totalPoints: Int!
-  transfersIn: Int!
-  transfersInEvent: Int!
-  transfersOut: Int!
-  transfersOutEvent: Int!
-  valueForm: String!
-  valueSeason: String!
-  minutes: Int!
-  goalsScored: Int!
-  assists: Int!
-  cleanSheets: Int!
-  goalsConceded: Int!
-  ownGoals: Int!
-  penaltiesSaved: Int!
-  penaltiesMissed: Int!
-  yellowCards: Int!
-  redCards: Int!
-  saves: Int!
-  bonus: Int!
-  bps: Int!
-  influence: String!
-  creativity: String!
-  threat: String!
-  ictIndex: String!
-  starts: Int!
-  expectedGoals: String!
-  expectedAssists: String!
-  expectedGoalInvolvements: String!
-  expectedGoalsConceded: String!
-  influenceRank: Int!
-  influenceRankType: Int!
-  creativityRank: Int!
-  creativityRankType: Int!
-  threatRank: Int!
-  threatRankType: Int!
-  ictIndexRank: Int!
-  ictIndexRankType: Int!
-  cornersAndIndirectFreekicksOrder: Int!
-  cornersAndIndirectFreekicksText: String!
-  directFreekicksOrder: Int!
-  directFreekicksText: String!
-  penaltiesOrder: Int!
-  penaltiesText: String!
-  expectedGoalsPer90: Float!
-  savesPer90: Float!
-  expectedAssistsPer90: Float!
-  expectedGoalInvolvementsPer90: Float!
-  expectedGoalsConcededPer90: Float!
-  goalsConcededPer90: Float!
-  nowCostRank: Int!
-  nowCostRankType: Int!
-  formRank: Int!
-  formRankType: Int!
-  pointsPerGameRank: Int!
-  pointsPerGameRankType: Int!
-  selectedRank: Int!
-  selectedRankType: Int!
-  startsPer90: Float!
-  cleanSheetsPer90: Float!
+  id: Int!  # Unique identifier for the player.
+  firstName: String!  # The player's first name.
+  secondName: String!  # The player's second name.
+  webName: String!  # The player's name as it appears on the web.
+  news: String!  # Latest news related to the player.
+  newsAdded: String!  # Timestamp when the latest news was added.
+  team: String!  # The name of the player's team.
+  position: PlayerPosition!  # The playing position of the player.
+  chanceOfPlayingNextRound: Int!  # Probability of the player participating in the next round.
+  chanceOfPlayingThisRound: Int!  # Probability of the player participating in the current round.
+  costChangeEvent: Int!  # Change in the player's cost since the last event.
+  costChangeEventFall: Int!  # Reduction in the player's cost since the last event.
+  costChangeStart: Int!  # Total change in the player's cost since the start of the season.
+  costChangeStartFall: Int!  # Total reduction in the player's cost since the start of the season.
+  dreamteamCount: Int!  # Number of times the player has been in the dream team.
+  elementType: Int!  # Element type of the player.
+  epNext: String!  # Expected performance score for the next round.
+  epThis: String!  # Expected performance score for the current round.
+  eventPoints: Int!  # Points scored by the player in the current event.
+  form: String!  # Current form of the player.
+  inDreamteam: Boolean!  # Indicates if the player is in the dream team.
+  nowCost: Int!  # Current cost of the player.
+  photo: String!  # URL to the player's photo.
+  pointsPerGame: String!  # Average points scored per game.
+  selectedByPercent: String!  # Percentage of fantasy teams selecting this player.
+  special: Boolean!  # Indicates if the player is a special case (e.g., not playing).
+  squadNumber: Int!  # The player's squad number.
+  status: String!  # Current playing status of the player.
+  teamCode: Int!  # Code representing the player's team.
+  totalPoints: Int!  # Total points scored by the player in the season.
+  transfersIn: Int!  # Number of times the player has been transferred in.
+  transfersInEvent: Int!  # Number of times the player has been transferred in during the current event.
+  transfersOut: Int!  # Number of times the player has been transferred out.
+  transfersOutEvent: Int!  # Number of times the player has been transferred out during the current event.
+  valueForm: String!  # Value form of the player.
+  valueSeason: String!  # Value of the player for the season.
+  minutes: Int!  # Minutes played by the player.
+  goalsScored: Int!  # Number of goals scored by the player.
+  assists: Int!  # Number of assists made by the player.
+  cleanSheets: Int!  # Number of clean sheets kept by the player.
+  goalsConceded: Int!  # Number of goals conceded while the player is on the field.
+  ownGoals: Int!  # Number of own goals scored by the player.
+  penaltiesSaved: Int!  # Number of penalties saved by the player.
+  penaltiesMissed: Int!  # Number of penalties missed by the player.
+  yellowCards: Int!  # Number of yellow cards received by the player.
+  redCards: Int!  # Number of red cards received by the player.
+  saves: Int!  # Number of saves made by the player.
+  bonus: Int!  # Bonus points earned by the player.
+  bps: Int!  # Bonus Points System score of the player.
+  influence: String!  # Player's influence score.
+  creativity: String!  # Player's creativity score.
+  threat: String!  # Player's threat score.
+  ictIndex: String!  # Player's ICT (Influence, Creativity, Threat) index.
+  starts: Int!  # Number of games the player has started.
+  expectedGoals: String!  # Expected number of goals to be scored by the player.
+  expectedAssists: String!  # Expected number of assists to be made by the player.
+  expectedGoalInvolvements: String!  # Expected number of goal involvements by the player.
+  expectedGoalsConceded: String!  # Expected number of goals to be conceded while the player is on the field.
+  influenceRank: Int!  # Rank of the player based on influence score.
+  influenceRankType: Int!  # Rank type of the player based on influence score.
+  creativityRank: Int!  # Rank of the player based on creativity score.
+  creativityRankType: Int!  # Rank type of the player based on creativity score.
+  threatRank: Int!  # Rank of the player based on threat score.
+  threatRankType: Int!  # Rank type of the player based on threat score.
+  ictIndexRank: Int!  # Rank of the player based on ICT index.
+  ictIndexRankType: Int!  # Rank type of the player based on ICT index.
+  cornersAndIndirectFreekicksOrder: Int!  # Order of the player in taking corners and indirect free kicks.
+  cornersAndIndirectFreekicksText: String!  # Description of the player's role in corners and indirect free kicks.
+  directFreekicksOrder: Int!  # Order of the player in taking direct free kicks.
+  directFreekicksText: String!  # Description of the player's role in direct free kicks.
+  penaltiesOrder: Int!  # Order of the player in taking penalties.
+  penaltiesText: String!  # Description of the player's role in penalties.
+  expectedGoalsPer90: Float!  # Expected goals per 90 minutes played.
+  savesPer90: Float!  # Saves made per 90 minutes played.
+  expectedAssistsPer90: Float!  # Expected assists per 90 minutes played.
+  expectedGoalInvolvementsPer90: Float!  # Expected goal involvements per 90 minutes played.
+  expectedGoalsConcededPer90: Float!  # Expected goals conceded per 90 minutes played.
+  goalsConcededPer90: Float!  # Goals conceded per 90 minutes played.
+  nowCostRank: Int!  # Rank of the player based on current cost.
+  nowCostRankType: Int!  # Rank type of the player based on current cost.
+  formRank: Int!  # Rank of the player based on current form.
+  formRankType: Int!  # Rank type of the player based on current form.
+  pointsPerGameRank: Int!  # Rank of the player based on points per game.
+  pointsPerGameRankType: Int!  # Rank type of the player based on points per game.
+  selectedRank: Int!  # Rank of the player based on selection percentage.
+  selectedRankType: Int!  # Rank type of the player based on selection percentage.
+  startsPer90: Float!  # Number of starts per 90 minutes played.
+  cleanSheetsPer90: Float!  # Number of clean sheets kept per 90 minutes played.
 }
 
+"""
+Root type for all queries in the schema, providing entry points to fetch data about teams, players, events, and more.
+"""
 type Query {
-  teams: [Team]
-  players(teamShortName:String): [Player]
-  events: [Event]
-  team(shortName:String!): Team
-  player(webName:String!): Player
-  event(id:Int!): Event
-  "Head to Head information between Team Home and Team Away. Arguments are the short names of team home and team away."
-  h2h(teamAShortName:String!, teamHShortName:String!): H2H
+  teams: [Team]  # Fetches a list of all teams.
+  players(teamShortName:String): [Player]  # Fetches a list of players filtered by team short name.
+  events: [Event]  # Fetches a list of all events or Gameweeks.
+  team(shortName:String!): Team  # Fetches a specific team by its short name.
+  player(webName:String!): Player  # Fetches a specific player by their web name.
+  event(id:Int!): Event  # Fetches a specific event or Gameweek by its ID.
+  h2h(teamAShortName:String!, teamHShortName:String!): H2H  # Fetches head-to-head information between two specified teams.
 }

@@ -8,12 +8,13 @@ import (
 	"strconv"
 )
 
+// Represents the usage of a game strategy or special play, known as a 'chip'.
 type ChipPlay struct {
 	ChipName  string `json:"chipName"`
 	NumPlayed int    `json:"numPlayed"`
 }
 
-// Information about a Gameweek including all fixtures.
+// Comprehensive information about a specific Gameweek including its fixtures and related data.
 type Event struct {
 	ID                     int             `json:"id"`
 	Name                   string          `json:"name"`
@@ -42,6 +43,7 @@ type Event struct {
 	Fixtures               []*Fixture      `json:"fixtures"`
 }
 
+// Details of a specific fixture in a football tournament including scores, times, and team information.
 type Fixture struct {
 	Code                 int     `json:"code"`
 	Event                *int    `json:"event,omitempty"`
@@ -66,25 +68,24 @@ type Fixture struct {
 	TeamHPulseID         *int    `json:"teamHPulseId,omitempty"`
 }
 
-// Information a Gameweek between Team Home and Team Away by kickoff datetime.
+// Information about a specific Gameweek including matchups between teams, scores, and location.
 type Gameweek struct {
-	Kickoff    string `json:"Kickoff"`
-	TeamAName  string `json:"TeamAName"`
-	ScoreTeamA int    `json:"ScoreTeamA"`
-	TeamHName  string `json:"TeamHName"`
-	ScoreTeamH int    `json:"ScoreTeamH"`
-	Stadium    string `json:"Stadium"`
+	Kickoff    string `json:"kickoff"`
+	TeamAName  string `json:"teamAName"`
+	ScoreTeamA int    `json:"scoreTeamA"`
+	TeamHName  string `json:"teamHName"`
+	ScoreTeamH int    `json:"scoreTeamH"`
+	Stadium    string `json:"stadium"`
 }
 
+// Head-to-Head (H2H) statistics comparing two teams, including their previous matchups.
 type H2h struct {
-	// Stats of Team Away. Example: accurate_back_zone_pass, accurate_long_balls, aerial_won, defender_goals, etc.
-	StatsTeamA []*StatsTeam `json:"StatsTeamA,omitempty"`
-	// Stats of Team Home. Example: accurate_back_zone_pass, accurate_long_balls, aerial_won, defender_goals, etc.
-	StatsTeamH []*StatsTeam `json:"StatsTeamH,omitempty"`
-	// Information about preview Gameweeks between Team Home and Team Away.
-	Gameweeks []*Gameweek `json:"Gameweeks,omitempty"`
+	StatsTeamA []*StatsTeam `json:"statsTeamA,omitempty"`
+	StatsTeamH []*StatsTeam `json:"statsTeamH,omitempty"`
+	Gameweeks  []*Gameweek  `json:"gameweeks,omitempty"`
 }
 
+// Represents a player in a football team, including detailed statistics and performance data.
 type Player struct {
 	ID                               int            `json:"id"`
 	FirstName                        string         `json:"firstName"`
@@ -176,21 +177,25 @@ type Player struct {
 	CleanSheetsPer90                 float64        `json:"cleanSheetsPer90"`
 }
 
+// Root type for all queries in the schema, providing entry points to fetch data about teams, players, events, and more.
 type Query struct {
 }
 
+// Statistical data for a team in a fixture, categorized by various metrics.
 type Stat struct {
 	Identifier *string     `json:"identifier,omitempty"`
 	TeamA      []*TeamStat `json:"teamA,omitempty"`
 	TeamH      []*TeamStat `json:"teamH,omitempty"`
 }
 
+// Statistics of a football team including its name, value, and a description.
 type StatsTeam struct {
-	Name        string  `json:"Name"`
-	Value       float64 `json:"Value"`
-	Description string  `json:"Description"`
+	Name        string  `json:"name"`
+	Value       float64 `json:"value"`
+	Description string  `json:"description"`
 }
 
+// Represents a football team with various attributes including strength and performance metrics.
 type Team struct {
 	ID                  int    `json:"id"`
 	Name                string `json:"name"`
@@ -204,16 +209,19 @@ type Team struct {
 	PulseID             int    `json:"pulseID"`
 }
 
+// Represents a single statistic for a team in a fixture.
 type TeamStat struct {
 	Value   *int `json:"value,omitempty"`
 	Element *int `json:"element,omitempty"`
 }
 
+// Detailed information about a top-performing element (player or team) in a particular context.
 type TopElementInfo struct {
 	ID     int `json:"id"`
 	Points int `json:"points"`
 }
 
+// Enumeration for player positions in a football game.
 type PlayerPosition string
 
 const (
