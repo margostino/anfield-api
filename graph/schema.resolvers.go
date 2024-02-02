@@ -53,7 +53,7 @@ func (r *queryResolver) Events(ctx context.Context, teamShortName *string) ([]*m
 			}
 			event.Fixtures = fixtures
 		}
-		response = append(response, toEventGraph(event))
+		response = append(response, toEventGraph(*event))
 	}
 	sort.Slice(response, func(i, j int) bool { return response[i].ID < response[j].ID })
 	return response, nil
@@ -77,7 +77,7 @@ func (r *queryResolver) Player(ctx context.Context, webName string) (*model.Play
 
 // Event is the resolver for the event field.
 func (r *queryResolver) Event(ctx context.Context, id int, teamShortName *string) (*model.Event, error) {
-	var data = db.Data.Events[id]
+	var data = *db.Data.Events[id]
 
 	if teamShortName != nil {
 		var fixtures []*db.Fixture

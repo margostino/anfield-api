@@ -119,7 +119,7 @@ func toPlayerGraph(player *db.Player) *model.Player {
 	}
 }
 
-func toEventGraph(event *db.Event) *model.Event {
+func toEventGraph(event db.Event) *model.Event {
 	chipPlays := make([]*model.ChipPlay, 0)
 	for _, chipPlay := range event.ChipPlays {
 		if chipPlay != nil {
