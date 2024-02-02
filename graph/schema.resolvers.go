@@ -7,6 +7,7 @@ package graph
 import (
 	"context"
 	"fmt"
+	"sort"
 	"strings"
 
 	"github.com/margostino/anfield-api/db"
@@ -42,6 +43,7 @@ func (r *queryResolver) Events(ctx context.Context) ([]*model.Event, error) {
 	for _, event := range db.Data.Events {
 		response = append(response, toEventGraph(event))
 	}
+	sort.Slice(response, func(i, j int) bool { return response[i].ID < response[j].ID })
 	return response, nil
 }
 

@@ -8,7 +8,7 @@ import (
 	"github.com/margostino/anfield-api/common"
 	"github.com/margostino/anfield-api/db"
 	"github.com/margostino/anfield-api/graph/model"
-	"github.com/margostino/anfield-api/network"
+	"github.com/margostino/anfield-api/http"
 	"github.com/margostino/anfield-api/pulse"
 )
 
@@ -213,7 +213,7 @@ func toH2HGraph(teamHData *db.Team, teamAData *db.Team) *model.H2h {
 	var pulseH2HResponse pulse.H2HResponse
 
 	pulseH2HUrlWithParams := fmt.Sprintf("%s?teams=%d,%d&altIds=true&comps=1", pulseH2HUrl, teamHData.PulseID, teamAData.PulseID)
-	network.Get(pulseH2HUrlWithParams, &pulseH2HResponse, nil, pulseHeaders)
+	http.Get(pulseH2HUrlWithParams, &pulseH2HResponse, nil, pulseHeaders)
 
 	h2h := &model.H2h{
 		StatsTeamA: make([]*model.StatsTeam, 0),

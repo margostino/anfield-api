@@ -5,7 +5,7 @@ import (
 	"sync"
 
 	"github.com/margostino/anfield-api/fpl"
-	"github.com/margostino/anfield-api/network"
+	"github.com/margostino/anfield-api/http"
 )
 
 var Data, TeamIndex = load()
@@ -19,8 +19,8 @@ func load() (*Cache, *TeamIdx) {
 	fplFixturesUrl := os.Getenv("FPL_FIXTURES_URL")
 
 	wg.Add(2)
-	go network.Get(fplStaticUrl, &fplStaticResponse, &wg, nil)
-	go network.Get(fplFixturesUrl, &fplFixturesResponse, &wg, nil)
+	go http.Get(fplStaticUrl, &fplStaticResponse, &wg, nil)
+	go http.Get(fplFixturesUrl, &fplFixturesResponse, &wg, nil)
 	wg.Wait()
 
 	teams, teamIndex := loadTeams(fplStaticResponse.Teams)
